@@ -1,6 +1,6 @@
 # BluetoothKit 使用指南
 
-本文档面向 **业务 / UI 层开发者**。通过 CocoaPods 引入（`import BluetoothKit`）；默认拿全量设备（C100 / C110 / XA01），也可按子规格只要 `Devices/C100` / `C110` / `XA01`。R2 不在 Full 里，其他工程单独写 `pod 'BluetoothKit/Devices/R2'`，启动时 `DeviceRegistry.shared.register(R2Factory())`（安装细节见仓库 README）。
+本文档面向 **业务 / UI 层开发者**。通过 CocoaPods 引入（`import BluetoothKit`）。默认 `pod 'BluetoothKit'` 是全量包，包含 C100、C110、XA01、R2。只要某一款时写 `Devices/C100`、`Devices/C110`、`Devices/XA01` 或 `Devices/R2` 中的一行。启动时注册对应工厂，例如 `DeviceRegistry.shared.register(R2Factory())`（安装细节见仓库 README）。
 
 - **Part A**：场景化用法（启动注册 → 扫描连接 → 指令 / 状态 → 重连 → Mock / 扩展）
 - **Part B**：[公开 API 参考](#公开-api-参考)（符号一览，与源码 `///` 对齐）

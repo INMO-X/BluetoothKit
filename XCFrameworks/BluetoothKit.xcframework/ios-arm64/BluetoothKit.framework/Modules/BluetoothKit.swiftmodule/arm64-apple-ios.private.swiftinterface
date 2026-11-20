@@ -7,6 +7,10 @@ import CoreBluetooth
 import CryptoKit
 import ExternalAccessory
 import Foundation
+import JLLogHelper
+import JL_AdvParse
+import JL_HashPair
+import JL_OTALib
 import Network
 import NetworkExtension
 import RxRelay
@@ -2735,6 +2739,160 @@ public struct HeartbeatPolicy {
   public static let disabled: BluetoothKit::HeartbeatPolicy
   public init(isEnabled: Swift::Bool = true, timeInterval: Foundation::TimeInterval = 5.0)
 }
+public enum R2Advertisement {
+  public static func searchDisplayName(for peripheral: BluetoothKit::BluetoothPeripheral) -> Swift::String
+  public static func macAddress(from advertisementData: [Swift::String : Any]) -> Swift::String?
+  public static func lastFourOfMAC(_ mac: Swift::String) -> Swift::String
+}
+final public class R2CommandBuilder : BluetoothKit::BluetoothCommandBuilder {
+  public init()
+  public static let writeCharUUID: CoreBluetooth::CBUUID
+  public static let notifyCharUUID: CoreBluetooth::CBUUID
+  public static let jlOTAWriteUUID: CoreBluetooth::CBUUID
+  public static let jlOTANotifyUUID: CoreBluetooth::CBUUID
+  final public var firmwareChunkPayloadBytes: Swift::Int {
+    get
+  }
+  final public var notifyCharacteristics: [CoreBluetooth::CBUUID] {
+    get
+  }
+  final public func writeCharacteristic(for command: any BluetoothKit::DeviceCommand) -> CoreBluetooth::CBUUID
+  final public func writeType(for command: any BluetoothKit::DeviceCommand) -> CoreBluetooth::CBCharacteristicWriteType
+  final public func heartbeat() -> (any BluetoothKit::DeviceCommand)?
+  final public func frames(for command: any BluetoothKit::DeviceCommand) throws -> [Foundation::Data]
+  final public func build(command: any BluetoothKit::DeviceCommand) throws -> Foundation::Data
+  @objc deinit
+}
+final public class R2CommandParser : BluetoothKit::BluetoothProtocolParser {
+  public init()
+  final public func reset()
+  final public func parse(data: Foundation::Data) -> [any BluetoothKit::DeviceEvent]
+  @objc deinit
+}
+final public class R2Device : BluetoothKit::BaseReducerDevice {
+  override final public var productCode: Swift::String {
+    get
+  }
+  override final public var typeIdentifier: Swift::String {
+    get
+  }
+  public init(peripheral: BluetoothKit::BluetoothPeripheral, manager: any BluetoothKit::BluetoothManagerProtocol)
+  override final public func getOTAType() -> BluetoothKit::OTAType
+  override final public func getOTARequiredBatteryLevel() -> Swift::Int
+  override final public func handle(data: Foundation::Data, ch: CoreBluetooth::CBCharacteristic?)
+  override final public func reduce(current: any BluetoothKit::DeviceState, event: any BluetoothKit::DeviceEvent) -> any BluetoothKit::DeviceState
+  override final public func send(command: any BluetoothKit::DeviceCommand)
+  @objc deinit
+}
+public enum R2CommandType {
+  public static let queryInfo: Swift::UInt8
+  public static let heartbeat: Swift::UInt8
+  public static let awaken: Swift::UInt8
+  public static let queryBattery: Swift::UInt8
+  public static let pushFirmware: Swift::UInt8
+}
+public enum R2DeviceCommand : BluetoothKit::DeviceCommand {
+  case queryInfo
+  case heartbeat
+  case awaken
+  case queryBattery
+  case pushFirmware(blob: Foundation::Data)
+}
+public enum R2EventType {
+  public static let queryInfo: Swift::UInt8
+  public static let heartbeat: Swift::UInt8
+  public static let awaken: Swift::UInt8
+  public static let queryBattery: Swift::UInt8
+  public static let pushFirmware: Swift::UInt8
+}
+public enum R2DeviceEvent : BluetoothKit::DeviceEvent {
+  case illegal
+  case info(model: Swift::String, sn: Swift::String, mac: Swift::String, version: Swift::String)
+  case heartbeat
+  case startTalk
+  case stopTalk
+  case battery(BluetoothKit::R2DeviceState.BluetoothKit::Battery)
+  case pushFirmware
+  case protocolError(Swift::String)
+}
+public struct R2DeviceState : BluetoothKit::DeviceState, Swift::Equatable {
+  public enum Activity : Swift::String, Swift::Equatable {
+    case illegal
+    case idle
+    case ready
+    public init?(rawValue: Swift::String)
+    public typealias RawValue = Swift::String
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  public struct Battery : Swift::Equatable {
+    public var left: Swift::Int
+    public var right: Swift::Int?
+    public static func == (a: BluetoothKit::R2DeviceState.BluetoothKit::Battery, b: BluetoothKit::R2DeviceState.BluetoothKit::Battery) -> Swift::Bool
+  }
+  public var activity: BluetoothKit::R2DeviceState.BluetoothKit::Activity
+  public var battery: BluetoothKit::R2DeviceState.BluetoothKit::Battery?
+  public var model: Swift::String?
+  public var sn: Swift::String?
+  public var mac: Swift::String?
+  public var firmwareVersion: Swift::String?
+  public var isTalking: Swift::Bool
+  public init(activity: BluetoothKit::R2DeviceState.BluetoothKit::Activity = .idle, battery: BluetoothKit::R2DeviceState.BluetoothKit::Battery? = nil, firmwareVersion: Swift::String? = nil, upgradePercent: Swift::Int = 0)
+  public static func == (a: BluetoothKit::R2DeviceState, b: BluetoothKit::R2DeviceState) -> Swift::Bool
+}
+final public class R2Factory : BluetoothKit::DeviceFactory {
+  public static let serviceUUID: CoreBluetooth::CBUUID
+  public static let jlOTAServiceUUID: CoreBluetooth::CBUUID
+  final public let filter: any BluetoothKit::DeviceFilter
+  final public var typeIdentifier: Swift::String {
+    get
+  }
+  public init()
+  final public func makeDevice(_ peripheral: BluetoothKit::BluetoothPeripheral, manager: any BluetoothKit::BluetoothManagerProtocol) -> any BluetoothKit::BluetoothDevice
+  @objc deinit
+}
+extension JL_OTALib::JL_OTAResult {
+  public var desc: Swift::String {
+    get
+  }
+}
+public enum R2OTAResult {
+  case progress(result: JL_OTALib::JL_OTAResult, progress: Swift::Float)
+}
+@objc @_inheritsConvenienceInitializers public class R2OTAManager : ObjectiveC::NSObject {
+  public var onResult: ((_ result: BluetoothKit::R2OTAResult) -> Swift::Void)?
+  public var onLog: ((_ message: Swift::String) -> Swift::Void)?
+  @objc deinit
+  @objc override dynamic public init()
+  public func stopR2OTA()
+  public func startR2OTA(otaData: Foundation::Data)
+}
+extension BluetoothKit::R2OTAManager : CoreBluetooth::CBCentralManagerDelegate {
+  @objc dynamic public func centralManagerDidUpdateState(_ central: CoreBluetooth::CBCentralManager)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth::CBCentralManager, didDiscover peripheral: CoreBluetooth::CBPeripheral, advertisementData: [Swift::String : Any], rssi RSSI: Foundation::NSNumber)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth::CBCentralManager, didConnect peripheral: CoreBluetooth::CBPeripheral)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth::CBCentralManager, didFailToConnect peripheral: CoreBluetooth::CBPeripheral, error: (any Swift::Error)?)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth::CBCentralManager, didDisconnectPeripheral peripheral: CoreBluetooth::CBPeripheral, error: (any Swift::Error)?)
+  @available(iOS 13.0, *)
+  @objc dynamic public func centralManager(_ central: CoreBluetooth::CBCentralManager, connectionEventDidOccur event: CoreBluetooth::CBConnectionEvent, for peripheral: CoreBluetooth::CBPeripheral)
+}
+extension BluetoothKit::R2OTAManager : CoreBluetooth::CBPeripheralDelegate {
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth::CBPeripheral, didDiscoverServices error: (any Swift::Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth::CBPeripheral, didDiscoverCharacteristicsFor service: CoreBluetooth::CBService, error: (any Swift::Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth::CBPeripheral, didUpdateNotificationStateFor characteristic: CoreBluetooth::CBCharacteristic, error: (any Swift::Error)?)
+  @objc dynamic public func peripheral(_ peripheral: CoreBluetooth::CBPeripheral, didUpdateValueFor characteristic: CoreBluetooth::CBCharacteristic, error: (any Swift::Error)?)
+  @objc dynamic public func peripheralIsReady(toSendWriteWithoutResponse peripheral: CoreBluetooth::CBPeripheral)
+}
+extension BluetoothKit::R2OTAManager : JL_OTALib::JL_OTAManagerDelegate {
+  @objc dynamic public func otaCancel()
+  @objc dynamic public func otaFeatureResult(_ manager: JL_OTALib::JL_OTAManager)
+  @objc dynamic public func otaUpgradeResult(_ result: JL_OTALib::JL_OTAResult, progress: Swift::Float)
+  @objc dynamic public func otaDataSend(_ data: Foundation::Data)
+}
+extension BluetoothKit::R2OTAManager : JL_HashPair::JLHashHandlerDelegate {
+  @objc dynamic public func hash(onPairOutputData data: Foundation::Data)
+}
 public enum SwitchPolicy {
   case keepBothConnected
   case disconnectPrevious
@@ -3537,6 +3695,8 @@ extension BluetoothKit::C110WifiSession.BluetoothKit::SoftAPOwner : Swift::RawRe
 extension BluetoothKit::EASessionMode : Swift::Equatable {}
 extension BluetoothKit::EASessionMode : Swift::Hashable {}
 extension BluetoothKit::EASessionMode : Swift::RawRepresentable {}
+extension BluetoothKit::R2DeviceState.BluetoothKit::Activity : Swift::Hashable {}
+extension BluetoothKit::R2DeviceState.BluetoothKit::Activity : Swift::RawRepresentable {}
 extension BluetoothKit::SwitchPolicy : Swift::Equatable {}
 extension BluetoothKit::SwitchPolicy : Swift::Hashable {}
 extension BluetoothKit::XA01AudioCmd : Swift::Equatable {}

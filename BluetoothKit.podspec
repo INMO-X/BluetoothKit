@@ -14,7 +14,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'BluetoothKit'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = 'INMO X Bluetooth Framework (binary distribution)'
   s.description      = <<-DESC
   INMO X 蓝牙框架二进制发行版。按子规格选择 Full / Base / 单设备组合包；
@@ -36,7 +36,13 @@ Pod::Spec.new do |s|
   }
 
   s.subspec 'Full' do |ss|
-    ss.vendored_frameworks = 'XCFrameworks/BluetoothKit.xcframework'
+    ss.vendored_frameworks = [
+      'XCFrameworks/BluetoothKit.xcframework',
+      'XCFrameworks/Frameworks/JL_OTALib.xcframework',
+      'XCFrameworks/Frameworks/JL_AdvParse.xcframework',
+      'XCFrameworks/Frameworks/JL_HashPair.xcframework',
+      'XCFrameworks/Frameworks/JLLogHelper.xcframework'
+    ]
     ss.frameworks = 'CoreBluetooth', 'AVFoundation', 'NetworkExtension', 'Network'
     ss.dependency 'RxSwift', '~> 6.9.0'
     ss.dependency 'RxRelay', '~> 6.9.0'
@@ -54,7 +60,7 @@ Pod::Spec.new do |s|
   # C100/C110/XA01/R2 under it, so `pod '…/Devices'` pulls ALL nested XCFrameworks
   # (same Swift module → duplicate symbols). Customers must use Full OR exactly
   # one Devices/<X> — never the Devices parent alone, never two Devices/* lines.
-  # Full does not include R2. Use Devices/R2 alone when the host only needs R2.
+  # Full already includes C100, C110, XA01, and R2. Use Devices/<X> for one product.
   # Nested path Devices/C100 is kept for Podfile compatibility; see README.
   s.subspec 'Devices' do |ds|
     ds.subspec 'C100' do |ss|
@@ -81,10 +87,10 @@ Pod::Spec.new do |s|
     ds.subspec 'R2' do |ss|
       ss.vendored_frameworks = [
         'XCFrameworks/variants/R2/BluetoothKit.xcframework',
-        'XCFrameworks/variants/R2/Frameworks/JL_OTALib.xcframework',
-        'XCFrameworks/variants/R2/Frameworks/JL_AdvParse.xcframework',
-        'XCFrameworks/variants/R2/Frameworks/JL_HashPair.xcframework',
-        'XCFrameworks/variants/R2/Frameworks/JLLogHelper.xcframework'
+        'XCFrameworks/Frameworks/JL_OTALib.xcframework',
+        'XCFrameworks/Frameworks/JL_AdvParse.xcframework',
+        'XCFrameworks/Frameworks/JL_HashPair.xcframework',
+        'XCFrameworks/Frameworks/JLLogHelper.xcframework'
       ]
       ss.frameworks = 'CoreBluetooth', 'AVFoundation'
       ss.dependency 'RxSwift', '~> 6.9.0'

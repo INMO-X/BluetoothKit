@@ -348,6 +348,8 @@ extern "C" {
 #endif
 @import CoreBluetooth;
 @import Foundation;
+@import JL_HashPair;
+@import JL_OTALib;
 @import ObjectiveC;
 #endif
 
@@ -455,6 +457,43 @@ SWIFT_CLASS("_TtC12BluetoothKit23ExternalAccessoryCenter")
 @interface ExternalAccessoryCenter : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+/// R2 设备杰理 OTA 升级管理器。
+/// 封装 JL_OTAManager SDK 交互、设备认证、BLE 数据通道桥接、左右镜腿分步升级。
+SWIFT_CLASS("_TtC12BluetoothKit12R2OTAManager")
+@interface R2OTAManager : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSData;
+@interface R2OTAManager (SWIFT_EXTENSION(BluetoothKit)) <JLHashHandlerDelegate>
+- (void)hashOnPairOutputData:(NSData * _Nonnull)data;
+@end
+
+@class JL_OTAManager;
+@interface R2OTAManager (SWIFT_EXTENSION(BluetoothKit)) <JL_OTAManagerDelegate>
+- (void)otaCancel;
+- (void)otaFeatureResult:(JL_OTAManager * _Nonnull)manager;
+- (void)otaUpgradeResult:(JL_OTAResult)result Progress:(float)progress;
+- (void)otaDataSend:(NSData * _Nonnull)data;
+@end
+
+@interface R2OTAManager (SWIFT_EXTENSION(BluetoothKit)) <CBPeripheralDelegate>
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didDiscoverServices:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didDiscoverCharacteristicsForService:(CBService * _Nonnull)service error:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didUpdateValueForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+- (void)peripheralIsReadyToSendWriteWithoutResponse:(CBPeripheral * _Nonnull)peripheral;
+@end
+
+@interface R2OTAManager (SWIFT_EXTENSION(BluetoothKit)) <CBCentralManagerDelegate>
+- (void)centralManagerDidUpdateState:(CBCentralManager * _Nonnull)central;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didDiscoverPeripheral:(CBPeripheral * _Nonnull)peripheral advertisementData:(NSDictionary<NSString *, id> * _Nonnull)advertisementData RSSI:(NSNumber * _Nonnull)RSSI;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didConnectPeripheral:(CBPeripheral * _Nonnull)peripheral;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didFailToConnectPeripheral:(CBPeripheral * _Nonnull)peripheral error:(NSError * _Nullable)error;
+- (void)centralManager:(CBCentralManager * _Nonnull)central didDisconnectPeripheral:(CBPeripheral * _Nonnull)peripheral error:(NSError * _Nullable)error;
+- (void)centralManager:(CBCentralManager * _Nonnull)central connectionEventDidOccur:(CBConnectionEvent)event forPeripheral:(CBPeripheral * _Nonnull)peripheral SWIFT_AVAILABILITY(ios,introduced=13.0);
 @end
 
 #endif // defined(__OBJC__)

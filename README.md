@@ -23,7 +23,7 @@ use_frameworks!
 target 'YourApp' do
   pod 'BluetoothKit',
     :git => 'https://github.com/INMO-X/BluetoothKit.git',
-    :tag => '0.1.2'
+    :tag => '0.1.3'
 end
 ```
 
@@ -33,13 +33,13 @@ end
 GIT = 'https://github.com/INMO-X/BluetoothKit.git'
 
 # 仅基础层（自行实现 Device）
-pod 'BluetoothKit/Base', :git => GIT, :tag => '0.1.2'
+pod 'BluetoothKit/Base', :git => GIT, :tag => '0.1.3'
 
 # 单产品线组合包（已含 Base 能力，无需再写 Base）—— 每次只选一行
-pod 'BluetoothKit/Devices/C100', :git => GIT, :tag => '0.1.2'
-# pod 'BluetoothKit/Devices/C110', :git => GIT, :tag => '0.1.2'
-# pod 'BluetoothKit/Devices/XA01', :git => GIT, :tag => '0.1.2'
-# pod 'BluetoothKit/Devices/R2', :git => GIT, :tag => '0.1.2'
+pod 'BluetoothKit/Devices/C100', :git => GIT, :tag => '0.1.3'
+# pod 'BluetoothKit/Devices/C110', :git => GIT, :tag => '0.1.3'
+# pod 'BluetoothKit/Devices/XA01', :git => GIT, :tag => '0.1.3'
+# pod 'BluetoothKit/Devices/R2', :git => GIT, :tag => '0.1.3'
 ```
 
 执行 `pod install` 后 `import BluetoothKit` 即可。
@@ -66,7 +66,7 @@ end
 
 | 子规格 | XCFramework 路径 | 包含内容 |
 |--------|-------------------|----------|
-| **Full** | `XCFrameworks/BluetoothKit.xcframework` | Base + C100 + C110 + XA01 |
+| **Full** | `XCFrameworks/BluetoothKit.xcframework` | Base + C100 + C110 + XA01 + R2 |
 | **Base** | `XCFrameworks/variants/Base/…` | Core / Device / Protocol / Service / Logger |
 | **Devices/C100** | `XCFrameworks/variants/C100/…` | Base + C100 |
 | **Devices/C110** | `XCFrameworks/variants/C110/…` | Base + C110 |
@@ -90,7 +90,7 @@ CocoaPods 会拉取下列第三方库（版本以 podspec 为准）：
 | RxSwift | `~> 6.9.0` | 全部 |
 | RxRelay | `~> 6.9.0` | 全部 |
 | SSZipArchive | `~> 2.4` | **Full**、**Devices/C100** |
-| JL_OTALib / JL_AdvParse / JL_HashPair / JLLogHelper | 随包动态 xcframework | **Devices/R2**（CocoaPods 嵌入宿主，不打进 BluetoothKit 静态库） |
+| JL_OTALib / JL_AdvParse / JL_HashPair / JLLogHelper | 随包动态 xcframework | **Full**、**Devices/R2**（CocoaPods 嵌入宿主，不打进 BluetoothKit 静态库） |
 
 系统框架（由 podspec 声明，无需单独 pod）：
 
