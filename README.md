@@ -23,7 +23,7 @@ use_frameworks!
 target 'YourApp' do
   pod 'BluetoothKit',
     :git => 'https://github.com/INMO-X/BluetoothKit.git',
-    :tag => '0.1.3'
+    :tag => '0.1.2'
 end
 ```
 
@@ -33,13 +33,13 @@ end
 GIT = 'https://github.com/INMO-X/BluetoothKit.git'
 
 # 仅基础层（自行实现 Device）
-pod 'BluetoothKit/Base', :git => GIT, :tag => '0.1.3'
+pod 'BluetoothKit/Base', :git => GIT, :tag => '0.1.2'
 
 # 单产品线组合包（已含 Base 能力，无需再写 Base）—— 每次只选一行
-pod 'BluetoothKit/Devices/C100', :git => GIT, :tag => '0.1.3'
-# pod 'BluetoothKit/Devices/C110', :git => GIT, :tag => '0.1.3'
-# pod 'BluetoothKit/Devices/XA01', :git => GIT, :tag => '0.1.3'
-# pod 'BluetoothKit/Devices/R2', :git => GIT, :tag => '0.1.3'
+pod 'BluetoothKit/Devices/C100', :git => GIT, :tag => '0.1.2'
+# pod 'BluetoothKit/Devices/C110', :git => GIT, :tag => '0.1.2'
+# pod 'BluetoothKit/Devices/XA01', :git => GIT, :tag => '0.1.2'
+# pod 'BluetoothKit/Devices/R2', :git => GIT, :tag => '0.1.2'
 ```
 
 执行 `pod install` 后 `import BluetoothKit` 即可。
