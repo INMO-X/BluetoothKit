@@ -23,7 +23,7 @@ use_frameworks!
 target 'YourApp' do
   pod 'BluetoothKit',
     :git => 'https://github.com/INMO-X/BluetoothKit.git',
-    :tag => '0.1.0'
+    :tag => '0.1.2'
 end
 ```
 
@@ -33,12 +33,13 @@ end
 GIT = 'https://github.com/INMO-X/BluetoothKit.git'
 
 # 仅基础层（自行实现 Device）
-pod 'BluetoothKit/Base', :git => GIT, :tag => '0.1.0'
+pod 'BluetoothKit/Base', :git => GIT, :tag => '0.1.2'
 
 # 单产品线组合包（已含 Base 能力，无需再写 Base）—— 每次只选一行
-pod 'BluetoothKit/Devices/C100', :git => GIT, :tag => '0.1.0'
-# pod 'BluetoothKit/Devices/C110', :git => GIT, :tag => '0.1.0'
-# pod 'BluetoothKit/Devices/XA01', :git => GIT, :tag => '0.1.0'
+pod 'BluetoothKit/Devices/C100', :git => GIT, :tag => '0.1.2'
+# pod 'BluetoothKit/Devices/C110', :git => GIT, :tag => '0.1.2'
+# pod 'BluetoothKit/Devices/XA01', :git => GIT, :tag => '0.1.2'
+# pod 'BluetoothKit/Devices/R2', :git => GIT, :tag => '0.1.2'
 ```
 
 执行 `pod install` 后 `import BluetoothKit` 即可。
@@ -70,10 +71,11 @@ end
 | **Devices/C100** | `XCFrameworks/variants/C100/…` | Base + C100 |
 | **Devices/C110** | `XCFrameworks/variants/C110/…` | Base + C110 |
 | **Devices/XA01** | `XCFrameworks/variants/XA01/…` | Base + XA01 |
+| **Devices/R2** | `XCFrameworks/variants/R2/…` | Base + R2，另附杰理动态库 |
 
 > **二进制客户必读（Devices 父规格陷阱）：**
 > - 请使用 **`Full`**，或**恰好一行** `Devices/<型号>`（如 `Devices/C100`）。
-> - **禁止**写 `pod 'BluetoothKit/Devices'`：CocoaPods 会嵌套带上 C100+C110+XA01 三份 XCFramework，同名 module 必冲突。
+> - **禁止**写 `pod 'BluetoothKit/Devices'`：CocoaPods 会嵌套带上 C100+C110+XA01+R2 四份 XCFramework，同名 module 必冲突。
 > - **禁止**同时写两行及以上 `Devices/*`（例如 C100 + C110）。
 > - **禁止**同时依赖 **`Full`** 与任意 `Devices/*`。
 > 各变体均为同名 Swift module `BluetoothKit`，重复链接会导致重复符号 / 模块冲突。
@@ -88,6 +90,7 @@ CocoaPods 会拉取下列第三方库（版本以 podspec 为准）：
 | RxSwift | `~> 6.9.0` | 全部 |
 | RxRelay | `~> 6.9.0` | 全部 |
 | SSZipArchive | `~> 2.4` | **Full**、**Devices/C100** |
+| JL_OTALib / JL_AdvParse / JL_HashPair / JLLogHelper | 随包动态 xcframework | **Devices/R2**（CocoaPods 嵌入宿主，不打进 BluetoothKit 静态库） |
 
 系统框架（由 podspec 声明，无需单独 pod）：
 
@@ -98,6 +101,7 @@ CocoaPods 会拉取下列第三方库（版本以 podspec 为准）：
 | Devices/C100 | CoreBluetooth, AVFoundation, NetworkExtension, Network |
 | Devices/C110 | CoreBluetooth, AVFoundation, NetworkExtension |
 | Devices/XA01 | CoreBluetooth, AVFoundation |
+| Devices/R2 | CoreBluetooth, AVFoundation |
 
 ---
 
@@ -108,6 +112,7 @@ import BluetoothKit
 
 // 1. 启动期：注册所支持的产品工厂（在 connect / bindUser / startScan 之前）
 DeviceRegistry.shared.register(C100Factory())
+// 只接入 R2 时改为：DeviceRegistry.shared.register(R2Factory())
 
 // 2. 登录后绑定用户并尝试回连上次设备
 BluetoothService.shared.bindUser(userID)

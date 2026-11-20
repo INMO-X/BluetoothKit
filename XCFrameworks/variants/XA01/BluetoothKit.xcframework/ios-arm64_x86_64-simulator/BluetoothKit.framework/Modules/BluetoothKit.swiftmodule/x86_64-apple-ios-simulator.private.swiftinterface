@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)
+// swift-compiler-version: Apple Swift version 6.4.2 effective-5.10 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
 // swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BluetoothKit
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
 import AVFoundation
 import CoreBluetooth
 import CryptoKit
@@ -22,6 +22,18 @@ public struct BluetoothAudioPort : Swift::Equatable {
   }
   public static func normalizedAddress(in text: Swift::String) -> Swift::String?
   public static func == (a: BluetoothKit::BluetoothAudioPort, b: BluetoothKit::BluetoothAudioPort) -> Swift::Bool
+}
+final public class AudioRouteMonitor {
+  final public var onChange: (([Swift::String]) -> Swift::Void)?
+  final public var onConnectChange: ((Swift::Bool) -> Swift::Void)?
+  final public var isConnected: Swift::Bool {
+    get
+  }
+  @objc deinit
+  public init(nameSeeds: [Swift::String], excludedNameSeeds: [Swift::String] = [])
+  final public func stop()
+  final public func start()
+  final public func recheck()
 }
 public struct AutoReconnectPolicy {
   public var isEnabled: Swift::Bool
@@ -56,13 +68,16 @@ open class BaseReducerDevice : BluetoothKit::BluetoothDevice {
   public var otaRequiredBatteryLevel: Swift::Int {
     get
   }
+  public var bleConnectOptions: [Swift::String : Any]? {
+    get
+  }
   public var audioRouteReconnectEnabled: Swift::Bool {
     get
   }
-  public var reconnectServiceUUIDs: [Swift::String] {
+  public var managesOwnReconnect: Swift::Bool {
     get
   }
-  public var managesOwnReconnect: Swift::Bool {
+  public var reconnectServiceUUIDs: [Swift::String] {
     get
   }
   final public let parser: any BluetoothKit::BluetoothProtocolParser
@@ -91,10 +106,11 @@ open class BaseReducerDevice : BluetoothKit::BluetoothDevice {
   public init(peripheral: BluetoothKit::BluetoothPeripheral, manager: any BluetoothKit::BluetoothManagerProtocol, parser: any BluetoothKit::BluetoothProtocolParser, builder: any BluetoothKit::BluetoothCommandBuilder, initialState: any BluetoothKit::DeviceState)
   open func getOTAType() -> BluetoothKit::OTAType
   open func getOTARequiredBatteryLevel() -> Swift::Int
+  open func getBLEConnectOptions() -> [Swift::String : Any]?
   open func getAudioRouteReconnectEnabled() -> Swift::Bool
+  open func getManagesOwnReconnect() -> Swift::Bool
   open func getReconnectServiceUUIDs() -> [Swift::String]
   open func onReconnectOpportunity()
-  open func getManagesOwnReconnect() -> Swift::Bool
   public func characteristicsReady(_ characteristics: [CoreBluetooth::CBUUID : CoreBluetooth::CBCharacteristic])
   public func invalidateCharacteristics()
   final public func heartbeat()
@@ -141,6 +157,7 @@ public protocol BluetoothDevice : AnyObject {
   var name: Swift::String { get }
   var otaType: BluetoothKit::OTAType { get }
   var otaRequiredBatteryLevel: Swift::Int { get }
+  var bleConnectOptions: [Swift::String : Any]? { get }
   var audioRouteReconnectEnabled: Swift::Bool { get }
   var managesOwnReconnect: Swift::Bool { get }
   var reconnectServiceUUIDs: [Swift::String] { get }
@@ -283,7 +300,7 @@ public enum BluetoothLogger {
   @objc override dynamic public init()
   final public func stopScan()
   final public func startScan(serviceUUIDs: [CoreBluetooth::CBUUID]? = nil)
-  final public func connect(_ peripheral: CoreBluetooth::CBPeripheral, timeout: Foundation::TimeInterval?)
+  final public func connect(_ peripheral: CoreBluetooth::CBPeripheral, options: [Swift::String : Any]?, timeout: Foundation::TimeInterval?)
   final public func syncPeripheralState(_ peripheral: CoreBluetooth::CBPeripheral)
   final public func disconnect(_ peripheral: CoreBluetooth::CBPeripheral)
   final public func write(_ data: Foundation::Data, to peripheral: CoreBluetooth::CBPeripheral?, characteristic uuid: CoreBluetooth::CBUUID, type: CoreBluetooth::CBCharacteristicWriteType)
@@ -313,7 +330,7 @@ public protocol BluetoothManagerProtocol : AnyObject {
   var receivedData: RxSwift::Observable<(CoreBluetooth::CBPeripheral, CoreBluetooth::CBCharacteristic?, Foundation::Data)> { get }
   func stopScan()
   func startScan(serviceUUIDs: [CoreBluetooth::CBUUID]?)
-  func connect(_ peripheral: CoreBluetooth::CBPeripheral, timeout: Foundation::TimeInterval?)
+  func connect(_ peripheral: CoreBluetooth::CBPeripheral, options: [Swift::String : Any]?, timeout: Foundation::TimeInterval?)
   func disconnect(_ peripheral: CoreBluetooth::CBPeripheral)
   func syncPeripheralState(_ peripheral: CoreBluetooth::CBPeripheral)
   func write(_ data: Foundation::Data, to peripheral: CoreBluetooth::CBPeripheral?, characteristic: CoreBluetooth::CBUUID, type: CoreBluetooth::CBCharacteristicWriteType)
@@ -324,6 +341,7 @@ public protocol BluetoothManagerProtocol : AnyObject {
 }
 extension BluetoothKit::BluetoothManagerProtocol {
   public func connect(_ peripheral: CoreBluetooth::CBPeripheral)
+  public func connect(_ peripheral: CoreBluetooth::CBPeripheral, timeout: Foundation::TimeInterval?)
 }
 public struct BluetoothPeripheral : Swift::Hashable {
   public let identifier: Foundation::UUID
@@ -368,7 +386,7 @@ final public class BluetoothService : BluetoothKit::BluetoothServiceProtocol {
   final public var connectionState: RxSwift::Observable<BluetoothKit::ConnectionState> {
     get
   }
-  final public var currentConnectionState: BluetoothKit::ConnectionState {
+  final public var connectionStateValue: BluetoothKit::ConnectionState {
     get
   }
   final public var bluetoothState: RxSwift::Observable<CoreBluetooth::CBManagerState> {
@@ -386,6 +404,9 @@ final public class BluetoothService : BluetoothKit::BluetoothServiceProtocol {
   }
   final public var persistence: any BluetoothKit::BluetoothDevicePersistence
   final public var firstConnectTimeout: Swift::Double
+  final public var bluetoothAudioPorts: [BluetoothKit::BluetoothAudioPort] {
+    get
+  }
   final public var externalAccessoryEnabled: Swift::Bool
   final public var externalAccessoryOnFirstConnect: Swift::Bool
   final public var listsExternalAccessoryCandidates: Swift::Bool
@@ -418,9 +439,6 @@ final public class BluetoothService : BluetoothKit::BluetoothServiceProtocol {
   }
   final public func retrieveConnectedPeripherals(withServiceUUIDs serviceUUIDs: [Swift::String]) -> [BluetoothKit::BluetoothPeripheral]
   final public func isSystemConnected(id: Foundation::UUID, serviceUUIDs: [Swift::String]) -> Swift::Bool
-  final public var bluetoothAudioPorts: [BluetoothKit::BluetoothAudioPort] {
-    get
-  }
   final public func cachedPeripheral(for identifier: Foundation::UUID) -> BluetoothKit::BluetoothPeripheral?
   final public func ensureDevice(for peripheral: BluetoothKit::BluetoothPeripheral, using factory: any BluetoothKit::DeviceFactory)
   final public func persistBoundDevice(_ peripheral: BluetoothKit::BluetoothPeripheral)

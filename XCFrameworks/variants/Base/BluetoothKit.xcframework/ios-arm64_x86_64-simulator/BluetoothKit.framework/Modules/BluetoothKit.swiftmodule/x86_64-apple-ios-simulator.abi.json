@@ -305,6 +305,538 @@
         ]
       },
       {
+        "kind": "TypeDecl",
+        "name": "AudioRouteMonitor",
+        "printedName": "AudioRouteMonitor",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "onChange",
+            "printedName": "onChange",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "(([Swift.String]) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "([Swift.String]) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Array",
+                        "printedName": "[Swift.String]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          }
+                        ],
+                        "usr": "s:Sa"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvp",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvp",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(([Swift.String]) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "([Swift.String]) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Array",
+                            "printedName": "[Swift.String]",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "String",
+                                "printedName": "Swift.String",
+                                "usr": "s:SS"
+                              }
+                            ],
+                            "usr": "s:Sa"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvg",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvg",
+                "moduleName": "BluetoothKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "(([Swift.String]) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "([Swift.String]) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Array",
+                            "printedName": "[Swift.String]",
+                            "children": [
+                              {
+                                "kind": "TypeNominal",
+                                "name": "String",
+                                "printedName": "Swift.String",
+                                "usr": "s:SS"
+                              }
+                            ],
+                            "usr": "s:Sa"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvs",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvs",
+                "moduleName": "BluetoothKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvM",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC8onChangeySaySSGcSgvM",
+                "moduleName": "BluetoothKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "onConnectChange",
+            "printedName": "onConnectChange",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "((Swift.Bool) -> ())?",
+                "children": [
+                  {
+                    "kind": "TypeFunc",
+                    "name": "Function",
+                    "printedName": "(Swift.Bool) -> ()",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Void",
+                        "printedName": "()"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Bool",
+                        "printedName": "Swift.Bool",
+                        "usr": "s:Sb"
+                      }
+                    ]
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvp",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvp",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((Swift.Bool) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(Swift.Bool) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Bool",
+                            "printedName": "Swift.Bool",
+                            "usr": "s:Sb"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvg",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvg",
+                "moduleName": "BluetoothKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "((Swift.Bool) -> ())?",
+                    "children": [
+                      {
+                        "kind": "TypeFunc",
+                        "name": "Function",
+                        "printedName": "(Swift.Bool) -> ()",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Void",
+                            "printedName": "()"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "Bool",
+                            "printedName": "Swift.Bool",
+                            "usr": "s:Sb"
+                          }
+                        ]
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvs",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvs",
+                "moduleName": "BluetoothKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvM",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC15onConnectChangeySbcSgvM",
+                "moduleName": "BluetoothKit",
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "isConnected",
+            "printedName": "isConnected",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC11isConnectedSbvp",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC11isConnectedSbvp",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC11isConnectedSbvg",
+                "mangledName": "$s12BluetoothKit17AudioRouteMonitorC11isConnectedSbvg",
+                "moduleName": "BluetoothKit",
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(nameSeeds:excludedNameSeeds:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "AudioRouteMonitor",
+                "printedName": "BluetoothKit.AudioRouteMonitor",
+                "usr": "s:12BluetoothKit17AudioRouteMonitorC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Swift.String]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sa"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[Swift.String]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "hasDefaultArg": true,
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC9nameSeeds012excludedNameG0ACSaySSG_AFtcfc",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC9nameSeeds012excludedNameG0ACSaySSG_AFtcfc",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "stop",
+            "printedName": "stop()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC4stopyyF",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC4stopyyF",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "start",
+            "printedName": "start()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC5startyyF",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC5startyyF",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "recheck",
+            "printedName": "recheck()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12BluetoothKit17AudioRouteMonitorC7recheckyyF",
+            "mangledName": "$s12BluetoothKit17AudioRouteMonitorC7recheckyyF",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:12BluetoothKit17AudioRouteMonitorC",
+        "mangledName": "$s12BluetoothKit17AudioRouteMonitorC",
+        "moduleName": "BluetoothKit",
+        "declAttributes": [
+          "AccessControl",
+          "Final",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
         "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
@@ -1466,6 +1998,89 @@
           },
           {
             "kind": "Var",
+            "name": "bleConnectOptions",
+            "printedName": "bleConnectOptions",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit17BaseReducerDeviceC17bleConnectOptionsSDySSypGSgvp",
+            "mangledName": "$s12BluetoothKit17BaseReducerDeviceC17bleConnectOptionsSDySSypGSgvp",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "[Swift.String : Any]?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Dictionary",
+                        "printedName": "[Swift.String : Any]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "ProtocolComposition",
+                            "printedName": "Any"
+                          }
+                        ],
+                        "usr": "s:SD"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17BaseReducerDeviceC17bleConnectOptionsSDySSypGSgvg",
+                "mangledName": "$s12BluetoothKit17BaseReducerDeviceC17bleConnectOptionsSDySSypGSgvg",
+                "moduleName": "BluetoothKit",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
             "name": "audioRouteReconnectEnabled",
             "printedName": "audioRouteReconnectEnabled",
             "children": [
@@ -1500,6 +2115,47 @@
                 "declKind": "Accessor",
                 "usr": "s:12BluetoothKit17BaseReducerDeviceC26audioRouteReconnectEnabledSbvg",
                 "mangledName": "$s12BluetoothKit17BaseReducerDeviceC26audioRouteReconnectEnabledSbvg",
+                "moduleName": "BluetoothKit",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "managesOwnReconnect",
+            "printedName": "managesOwnReconnect",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvp",
+            "mangledName": "$s12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvp",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvg",
+                "mangledName": "$s12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvg",
                 "moduleName": "BluetoothKit",
                 "accessorKind": "get"
               }
@@ -1557,47 +2213,6 @@
                 "declKind": "Accessor",
                 "usr": "s:12BluetoothKit17BaseReducerDeviceC21reconnectServiceUUIDsSaySSGvg",
                 "mangledName": "$s12BluetoothKit17BaseReducerDeviceC21reconnectServiceUUIDsSaySSGvg",
-                "moduleName": "BluetoothKit",
-                "accessorKind": "get"
-              }
-            ]
-          },
-          {
-            "kind": "Var",
-            "name": "managesOwnReconnect",
-            "printedName": "managesOwnReconnect",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvp",
-            "mangledName": "$s12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvp",
-            "moduleName": "BluetoothKit",
-            "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Bool",
-                    "printedName": "Swift.Bool",
-                    "usr": "s:Sb"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvg",
-                "mangledName": "$s12BluetoothKit17BaseReducerDeviceC19managesOwnReconnectSbvg",
                 "moduleName": "BluetoothKit",
                 "accessorKind": "get"
               }
@@ -2150,6 +2765,50 @@
           },
           {
             "kind": "Function",
+            "name": "getBLEConnectOptions",
+            "printedName": "getBLEConnectOptions()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12BluetoothKit17BaseReducerDeviceC20getBLEConnectOptionsSDySSypGSgyF",
+            "mangledName": "$s12BluetoothKit17BaseReducerDeviceC20getBLEConnectOptionsSDySSypGSgyF",
+            "moduleName": "BluetoothKit",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
             "name": "getAudioRouteReconnectEnabled",
             "printedName": "getAudioRouteReconnectEnabled()",
             "children": [
@@ -2163,6 +2822,29 @@
             "declKind": "Func",
             "usr": "s:12BluetoothKit17BaseReducerDeviceC29getAudioRouteReconnectEnabledSbyF",
             "mangledName": "$s12BluetoothKit17BaseReducerDeviceC29getAudioRouteReconnectEnabledSbyF",
+            "moduleName": "BluetoothKit",
+            "isOpen": true,
+            "declAttributes": [
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getManagesOwnReconnect",
+            "printedName": "getManagesOwnReconnect()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12BluetoothKit17BaseReducerDeviceC22getManagesOwnReconnectSbyF",
+            "mangledName": "$s12BluetoothKit17BaseReducerDeviceC22getManagesOwnReconnectSbyF",
             "moduleName": "BluetoothKit",
             "isOpen": true,
             "declAttributes": [
@@ -2216,29 +2898,6 @@
             "declKind": "Func",
             "usr": "s:12BluetoothKit17BaseReducerDeviceC22onReconnectOpportunityyyF",
             "mangledName": "$s12BluetoothKit17BaseReducerDeviceC22onReconnectOpportunityyyF",
-            "moduleName": "BluetoothKit",
-            "isOpen": true,
-            "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "getManagesOwnReconnect",
-            "printedName": "getManagesOwnReconnect()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Bool",
-                "printedName": "Swift.Bool",
-                "usr": "s:Sb"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:12BluetoothKit17BaseReducerDeviceC22getManagesOwnReconnectSbyF",
-            "mangledName": "$s12BluetoothKit17BaseReducerDeviceC22getManagesOwnReconnectSbyF",
             "moduleName": "BluetoothKit",
             "isOpen": true,
             "declAttributes": [
@@ -3615,6 +4274,93 @@
                 "declKind": "Accessor",
                 "usr": "s:12BluetoothKit0A6DeviceP23otaRequiredBatteryLevelSivg",
                 "mangledName": "$s12BluetoothKit0A6DeviceP23otaRequiredBatteryLevelSivg",
+                "moduleName": "BluetoothKit",
+                "genericSig": "<τ_0_0 where τ_0_0 : BluetoothKit.BluetoothDevice>",
+                "sugared_genericSig": "<Self where Self : BluetoothKit.BluetoothDevice>",
+                "protocolReq": true,
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "bleConnectOptions",
+            "printedName": "bleConnectOptions",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit0A6DeviceP17bleConnectOptionsSDySSypGSgvp",
+            "mangledName": "$s12BluetoothKit0A6DeviceP17bleConnectOptionsSDySSypGSgvp",
+            "moduleName": "BluetoothKit",
+            "protocolReq": true,
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "[Swift.String : Any]?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "Dictionary",
+                        "printedName": "[Swift.String : Any]",
+                        "children": [
+                          {
+                            "kind": "TypeNominal",
+                            "name": "String",
+                            "printedName": "Swift.String",
+                            "usr": "s:SS"
+                          },
+                          {
+                            "kind": "TypeNominal",
+                            "name": "ProtocolComposition",
+                            "printedName": "Any"
+                          }
+                        ],
+                        "usr": "s:SD"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit0A6DeviceP17bleConnectOptionsSDySSypGSgvg",
+                "mangledName": "$s12BluetoothKit0A6DeviceP17bleConnectOptionsSDySSypGSgvg",
                 "moduleName": "BluetoothKit",
                 "genericSig": "<τ_0_0 where τ_0_0 : BluetoothKit.BluetoothDevice>",
                 "sugared_genericSig": "<Self where Self : BluetoothKit.BluetoothDevice>",
@@ -8864,7 +9610,7 @@
           {
             "kind": "Function",
             "name": "connect",
-            "printedName": "connect(_:timeout:)",
+            "printedName": "connect(_:options:timeout:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -8876,6 +9622,33 @@
                 "name": "CBPeripheral",
                 "printedName": "CoreBluetooth.CBPeripheral",
                 "usr": "c:objc(cs)CBPeripheral"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -8893,8 +9666,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:12BluetoothKit0A7ManagerC7connect_7timeoutySo12CBPeripheralC_SdSgtF",
-            "mangledName": "$s12BluetoothKit0A7ManagerC7connect_7timeoutySo12CBPeripheralC_SdSgtF",
+            "usr": "s:12BluetoothKit0A7ManagerC7connect_7options7timeoutySo12CBPeripheralC_SDySSypGSgSdSgtF",
+            "mangledName": "$s12BluetoothKit0A7ManagerC7connect_7options7timeoutySo12CBPeripheralC_SDySSypGSgSdSgtF",
             "moduleName": "BluetoothKit",
             "declAttributes": [
               "Final",
@@ -10290,7 +11063,7 @@
           {
             "kind": "Function",
             "name": "connect",
-            "printedName": "connect(_:timeout:)",
+            "printedName": "connect(_:options:timeout:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -10302,6 +11075,33 @@
                 "name": "CBPeripheral",
                 "printedName": "CoreBluetooth.CBPeripheral",
                 "usr": "c:objc(cs)CBPeripheral"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "[Swift.String : Any]?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Dictionary",
+                    "printedName": "[Swift.String : Any]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      },
+                      {
+                        "kind": "TypeNominal",
+                        "name": "ProtocolComposition",
+                        "printedName": "Any"
+                      }
+                    ],
+                    "usr": "s:SD"
+                  }
+                ],
+                "usr": "s:Sq"
               },
               {
                 "kind": "TypeNominal",
@@ -10319,8 +11119,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:12BluetoothKit0A15ManagerProtocolP7connect_7timeoutySo12CBPeripheralC_SdSgtF",
-            "mangledName": "$s12BluetoothKit0A15ManagerProtocolP7connect_7timeoutySo12CBPeripheralC_SdSgtF",
+            "usr": "s:12BluetoothKit0A15ManagerProtocolP7connect_7options7timeoutySo12CBPeripheralC_SDySSypGSgSdSgtF",
+            "mangledName": "$s12BluetoothKit0A15ManagerProtocolP7connect_7options7timeoutySo12CBPeripheralC_SDySSypGSgSdSgtF",
             "moduleName": "BluetoothKit",
             "genericSig": "<τ_0_0 where τ_0_0 : BluetoothKit.BluetoothManagerProtocol>",
             "sugared_genericSig": "<Self where Self : BluetoothKit.BluetoothManagerProtocol>",
@@ -10679,6 +11479,49 @@
             "declKind": "Func",
             "usr": "s:12BluetoothKit0A15ManagerProtocolPAAE7connectyySo12CBPeripheralCF",
             "mangledName": "$s12BluetoothKit0A15ManagerProtocolPAAE7connectyySo12CBPeripheralCF",
+            "moduleName": "BluetoothKit",
+            "genericSig": "<τ_0_0 where τ_0_0 : BluetoothKit.BluetoothManagerProtocol>",
+            "sugared_genericSig": "<Self where Self : BluetoothKit.BluetoothManagerProtocol>",
+            "declAttributes": [
+              "RawDocComment"
+            ],
+            "isFromExtension": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "connect",
+            "printedName": "connect(_:timeout:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CBPeripheral",
+                "printedName": "CoreBluetooth.CBPeripheral",
+                "usr": "c:objc(cs)CBPeripheral"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.Double?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Double",
+                    "printedName": "Swift.Double",
+                    "usr": "s:Sd"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:12BluetoothKit0A15ManagerProtocolPAAE7connect_7timeoutySo12CBPeripheralC_SdSgtF",
+            "mangledName": "$s12BluetoothKit0A15ManagerProtocolPAAE7connect_7timeoutySo12CBPeripheralC_SdSgtF",
             "moduleName": "BluetoothKit",
             "genericSig": "<τ_0_0 where τ_0_0 : BluetoothKit.BluetoothManagerProtocol>",
             "sugared_genericSig": "<Self where Self : BluetoothKit.BluetoothManagerProtocol>",
@@ -11894,8 +12737,8 @@
           },
           {
             "kind": "Var",
-            "name": "currentConnectionState",
-            "printedName": "currentConnectionState",
+            "name": "connectionStateValue",
+            "printedName": "connectionStateValue",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -11905,8 +12748,8 @@
               }
             ],
             "declKind": "Var",
-            "usr": "s:12BluetoothKit0A7ServiceC22currentConnectionStateAA0eF0Ovp",
-            "mangledName": "$s12BluetoothKit0A7ServiceC22currentConnectionStateAA0eF0Ovp",
+            "usr": "s:12BluetoothKit0A7ServiceC20connectionStateValueAA010ConnectionE0Ovp",
+            "mangledName": "$s12BluetoothKit0A7ServiceC20connectionStateValueAA010ConnectionE0Ovp",
             "moduleName": "BluetoothKit",
             "declAttributes": [
               "Final",
@@ -11927,8 +12770,8 @@
                   }
                 ],
                 "declKind": "Accessor",
-                "usr": "s:12BluetoothKit0A7ServiceC22currentConnectionStateAA0eF0Ovg",
-                "mangledName": "$s12BluetoothKit0A7ServiceC22currentConnectionStateAA0eF0Ovg",
+                "usr": "s:12BluetoothKit0A7ServiceC20connectionStateValueAA010ConnectionE0Ovg",
+                "mangledName": "$s12BluetoothKit0A7ServiceC20connectionStateValueAA010ConnectionE0Ovg",
                 "moduleName": "BluetoothKit",
                 "declAttributes": [
                   "Final"
@@ -12627,6 +13470,67 @@
                   "Final"
                 ],
                 "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "bluetoothAudioPorts",
+            "printedName": "bluetoothAudioPorts",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[BluetoothKit.BluetoothAudioPort]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "BluetoothAudioPort",
+                    "printedName": "BluetoothKit.BluetoothAudioPort",
+                    "usr": "s:12BluetoothKit0A9AudioPortV"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvp",
+            "mangledName": "$s12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvp",
+            "moduleName": "BluetoothKit",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "RawDocComment"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[BluetoothKit.BluetoothAudioPort]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "BluetoothAudioPort",
+                        "printedName": "BluetoothKit.BluetoothAudioPort",
+                        "usr": "s:12BluetoothKit0A9AudioPortV"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvg",
+                "mangledName": "$s12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvg",
+                "moduleName": "BluetoothKit",
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
               }
             ]
           },
@@ -14171,67 +15075,6 @@
               "RawDocComment"
             ],
             "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Var",
-            "name": "bluetoothAudioPorts",
-            "printedName": "bluetoothAudioPorts",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Array",
-                "printedName": "[BluetoothKit.BluetoothAudioPort]",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "BluetoothAudioPort",
-                    "printedName": "BluetoothKit.BluetoothAudioPort",
-                    "usr": "s:12BluetoothKit0A9AudioPortV"
-                  }
-                ],
-                "usr": "s:Sa"
-              }
-            ],
-            "declKind": "Var",
-            "usr": "s:12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvp",
-            "mangledName": "$s12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvp",
-            "moduleName": "BluetoothKit",
-            "declAttributes": [
-              "Final",
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "accessors": [
-              {
-                "kind": "Accessor",
-                "name": "Get",
-                "printedName": "Get()",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "Array",
-                    "printedName": "[BluetoothKit.BluetoothAudioPort]",
-                    "children": [
-                      {
-                        "kind": "TypeNominal",
-                        "name": "BluetoothAudioPort",
-                        "printedName": "BluetoothKit.BluetoothAudioPort",
-                        "usr": "s:12BluetoothKit0A9AudioPortV"
-                      }
-                    ],
-                    "usr": "s:Sa"
-                  }
-                ],
-                "declKind": "Accessor",
-                "usr": "s:12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvg",
-                "mangledName": "$s12BluetoothKit0A7ServiceC19bluetoothAudioPortsSayAA0aE4PortVGvg",
-                "moduleName": "BluetoothKit",
-                "declAttributes": [
-                  "Final"
-                ],
-                "accessorKind": "get"
-              }
-            ]
           },
           {
             "kind": "Function",
@@ -23542,672 +24385,693 @@
   },
   "ConstValues": [
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
       "kind": "StringLiteral",
-      "offset": 2926,
+      "offset": 2850,
       "length": 92,
       "value": "\"(?<![0-9A-Fa-f])[0-9A-Fa-f]{2}([:-])(?:[0-9A-Fa-f]{2}\\1){4}[0-9A-Fa-f]{2}(?![0-9A-Fa-f])\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
       "kind": "StringLiteral",
-      "offset": 3096,
+      "offset": 3020,
       "length": 21,
       "value": "\"^[0-9A-Fa-f]{12}$\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
       "kind": "BooleanLiteral",
-      "offset": 3697,
+      "offset": 3793,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AudioRouteMonitor.swift",
+      "kind": "Array",
+      "offset": 6324,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "BooleanLiteral",
       "offset": 1576,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "IntegerLiteral",
       "offset": 1618,
       "length": 1,
       "value": "3"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "FloatLiteral",
       "offset": 1666,
       "length": 3,
       "value": "1.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "FloatLiteral",
       "offset": 1712,
       "length": 4,
       "value": "30.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "FloatLiteral",
       "offset": 1762,
       "length": 3,
       "value": "2.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "BooleanLiteral",
       "offset": 1813,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/AutoReconnectPolicy.swift",
       "kind": "BooleanLiteral",
       "offset": 2423,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "StringLiteral",
-      "offset": 2666,
+      "offset": 2827,
       "length": 28,
       "value": "\"bluetoothkit.device.reduce\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "Dictionary",
-      "offset": 2810,
+      "offset": 2971,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "BooleanLiteral",
-      "offset": 2984,
+      "offset": 3145,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "BooleanLiteral",
-      "offset": 5050,
+      "offset": 5211,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "BooleanLiteral",
-      "offset": 7672,
+      "offset": 7833,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "IntegerLiteral",
-      "offset": 14296,
+      "offset": 14642,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/BaseReducerDevice.swift",
       "kind": "IntegerLiteral",
-      "offset": 15089,
+      "offset": 15435,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothCmdThread.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothCmdThread.swift",
       "kind": "StringLiteral",
       "offset": 715,
       "length": 5,
       "value": "\"cmd\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothDevicePersistence.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothDevicePersistence.swift",
       "kind": "StringLiteral",
       "offset": 7961,
       "length": 28,
       "value": "\"BluetoothKit.boundDevices.\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "StringLiteral",
       "offset": 408,
       "length": 4,
       "value": "\"TX\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "StringLiteral",
       "offset": 431,
       "length": 4,
       "value": "\"RX\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "BooleanLiteral",
       "offset": 628,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "StringLiteral",
       "offset": 1072,
       "length": 8,
       "value": "\"Common\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "StringLiteral",
       "offset": 1590,
       "length": 13,
       "value": "\"en_US_POSIX\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "StringLiteral",
       "offset": 1628,
       "length": 25,
       "value": "\"yyyy-MM-dd HH:mm:ss.SSS\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "StringLiteral",
       "offset": 1808,
       "length": 18,
       "value": "\"0123456789ABCDEF\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Logger\/BluetoothLogger.swift",
       "kind": "IntegerLiteral",
       "offset": 2273,
       "length": 4,
       "value": "0x20"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Array",
       "offset": 502,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
       "offset": 793,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "StringLiteral",
       "offset": 1606,
       "length": 28,
       "value": "\"bluetoothkit.central.queue\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "BooleanLiteral",
       "offset": 2007,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "BooleanLiteral",
       "offset": 2752,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
-      "offset": 3283,
+      "offset": 3496,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
-      "offset": 3421,
+      "offset": 3559,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
-      "offset": 3699,
+      "offset": 3697,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
-      "offset": 4569,
+      "offset": 3975,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
-      "offset": 5261,
+      "offset": 4845,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "kind": "Dictionary",
+      "offset": 5537,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Array",
-      "offset": 5688,
+      "offset": 5964,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "FloatLiteral",
-      "offset": 5844,
+      "offset": 6120,
       "length": 4,
       "value": "10.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "Dictionary",
-      "offset": 6475,
+      "offset": 6751,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothManager.swift",
       "kind": "FloatLiteral",
-      "offset": 20141,
+      "offset": 21803,
       "length": 3,
       "value": "4.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothPeripheral.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothPeripheral.swift",
       "kind": "IntegerLiteral",
       "offset": 2797,
       "length": 3,
       "value": "-55"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/BluetoothPeripheral.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/BluetoothPeripheral.swift",
       "kind": "Dictionary",
       "offset": 2869,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Array",
-      "offset": 1256,
+      "offset": 1252,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Array",
-      "offset": 1338,
+      "offset": 1424,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Array",
-      "offset": 1494,
+      "offset": 1968,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "StringLiteral",
-      "offset": 4801,
+      "offset": 4760,
       "length": 23,
       "value": "\"bluetoothkit.rx.parse\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 5103,
+      "offset": 5062,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 5419,
+      "offset": 5378,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "IntegerLiteral",
-      "offset": 5535,
+      "offset": 5494,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 5695,
+      "offset": 5654,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "StringLiteral",
-      "offset": 5794,
+      "offset": 5753,
       "length": 32,
       "value": "\"bluetoothkit.service.reconnect\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "FloatLiteral",
-      "offset": 6030,
+      "offset": 5989,
       "length": 4,
       "value": "30.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Array",
-      "offset": 6447,
+      "offset": 6406,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "kind": "Array",
+      "offset": 6858,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "IntegerLiteral",
-      "offset": 7175,
+      "offset": 7206,
       "length": 1,
       "value": "5"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "FloatLiteral",
-      "offset": 7233,
+      "offset": 7264,
       "length": 3,
       "value": "2.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Array",
-      "offset": 7723,
+      "offset": 8165,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 8077,
+      "offset": 8519,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 8409,
+      "offset": 8851,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 8750,
+      "offset": 9192,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 9026,
+      "offset": 9468,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 9179,
+      "offset": 9621,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "FloatLiteral",
-      "offset": 9644,
+      "offset": 10086,
       "length": 3,
       "value": "5.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Array",
-      "offset": 10340,
+      "offset": 10782,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 10491,
+      "offset": 10933,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "FloatLiteral",
-      "offset": 10973,
+      "offset": 11415,
       "length": 4,
       "value": "20.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 11140,
+      "offset": 11582,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "FloatLiteral",
-      "offset": 11494,
+      "offset": 11936,
       "length": 3,
       "value": "5.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 11652,
+      "offset": 12094,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "Dictionary",
-      "offset": 11818,
+      "offset": 12260,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 12247,
+      "offset": 12689,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 25171,
+      "offset": 26091,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 26505,
+      "offset": 27425,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 27466,
+      "offset": 28386,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/BluetoothService.swift",
       "kind": "BooleanLiteral",
-      "offset": 29642,
+      "offset": 30562,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Device\/DeviceFactory.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Device\/DeviceFactory.swift",
       "kind": "Array",
       "offset": 3485,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Protocol\/DeviceFilter.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Protocol\/DeviceFilter.swift",
       "kind": "IntegerLiteral",
       "offset": 2414,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Protocol\/DeviceFilter.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Protocol\/DeviceFilter.swift",
       "kind": "IntegerLiteral",
       "offset": 3059,
       "length": 1,
       "value": "1"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "StringLiteral",
       "offset": 1760,
       "length": 4,
       "value": "\"ea\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "Dictionary",
       "offset": 2510,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "BooleanLiteral",
       "offset": 2602,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "BooleanLiteral",
       "offset": 2803,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "BooleanLiteral",
       "offset": 2836,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "IntegerLiteral",
       "offset": 2869,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "IntegerLiteral",
       "offset": 2895,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "IntegerLiteral",
       "offset": 2924,
       "length": 1,
       "value": "0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/EASessionTransport.swift",
       "kind": "Dictionary",
       "offset": 2987,
       "length": 3,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryCenter.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryCenter.swift",
       "kind": "Array",
       "offset": 1678,
       "length": 2,
       "value": "[]"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryCenter.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryCenter.swift",
       "kind": "BooleanLiteral",
       "offset": 1708,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryIdentityStore.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryIdentityStore.swift",
       "kind": "StringLiteral",
       "offset": 983,
       "length": 32,
       "value": "\"bluetoothkit.ea.serialToDevice\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryIdentityStore.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryIdentityStore.swift",
       "kind": "StringLiteral",
       "offset": 1048,
       "length": 28,
       "value": "\"bluetoothkit.ea.mfiDevices\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryInfo.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Core\/EA\/ExternalAccessoryInfo.swift",
       "kind": "StringLiteral",
       "offset": 4139,
       "length": 38,
       "value": "\"6E5D2F1A-3C7B-4B8E-9A40-1C2D3E4F5A6B\""
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
       "kind": "FloatLiteral",
       "offset": 449,
       "length": 3,
       "value": "5.0"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
       "kind": "BooleanLiteral",
       "offset": 648,
       "length": 5,
       "value": "false"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
       "kind": "BooleanLiteral",
       "offset": 764,
       "length": 4,
       "value": "true"
     },
     {
-      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.LkdX3zsYkD\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
+      "filePath": "\/var\/folders\/z1\/w379z4_n4zg71ltvnq1lr9kw0000gn\/T\/bluetoothkit-build-XXXX.R0dHgPnMdu\/Base\/Sources\/BluetoothKit\/Service\/HeartbeatPolicy.swift",
       "kind": "FloatLiteral",
       "offset": 815,
       "length": 3,

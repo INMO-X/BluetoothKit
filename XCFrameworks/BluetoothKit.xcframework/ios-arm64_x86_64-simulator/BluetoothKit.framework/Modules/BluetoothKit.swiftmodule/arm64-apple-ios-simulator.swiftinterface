@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)
+// swift-compiler-version: Apple Swift version 6.4.2 effective-5.10 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
 // swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -language-mode 5 -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name BluetoothKit
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4.2
 import AVFoundation
 import CoreBluetooth
 import CryptoKit
@@ -16,6 +16,7 @@ import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+import zlib
 public struct BluetoothAudioPort : Swift::Equatable {
   public let name: Swift::String
   public let uid: Swift::String
@@ -25,6 +26,18 @@ public struct BluetoothAudioPort : Swift::Equatable {
   }
   public static func normalizedAddress(in text: Swift::String) -> Swift::String?
   public static func == (a: BluetoothKit::BluetoothAudioPort, b: BluetoothKit::BluetoothAudioPort) -> Swift::Bool
+}
+final public class AudioRouteMonitor {
+  final public var onChange: (([Swift::String]) -> Swift::Void)?
+  final public var onConnectChange: ((Swift::Bool) -> Swift::Void)?
+  final public var isConnected: Swift::Bool {
+    get
+  }
+  @objc deinit
+  public init(nameSeeds: [Swift::String], excludedNameSeeds: [Swift::String] = [])
+  final public func stop()
+  final public func start()
+  final public func recheck()
 }
 public struct AutoReconnectPolicy {
   public var isEnabled: Swift::Bool
@@ -37,6 +50,19 @@ public struct AutoReconnectPolicy {
   public static let `default`: BluetoothKit::AutoReconnectPolicy
   public static let disabled: BluetoothKit::AutoReconnectPolicy
   public func delay(for attempt: Swift::Int) -> Foundation::TimeInterval
+}
+public enum C110BESGATT {
+  public static let service: CoreBluetooth::CBUUID
+  public static let channel: CoreBluetooth::CBUUID
+}
+extension BluetoothKit::C110Device {
+  final public func sendBES(_ data: Foundation::Data, withResponse: Swift::Bool)
+  final public var besDataStream: RxSwift::Observable<Foundation::Data> {
+    get
+  }
+  final public var reconnectedStream: RxSwift::Observable<Swift::Void> {
+    get
+  }
 }
 open class BaseReducerDevice : BluetoothKit::BluetoothDevice {
   public var productCode: Swift::String {
@@ -59,13 +85,16 @@ open class BaseReducerDevice : BluetoothKit::BluetoothDevice {
   public var otaRequiredBatteryLevel: Swift::Int {
     get
   }
+  public var bleConnectOptions: [Swift::String : Any]? {
+    get
+  }
   public var audioRouteReconnectEnabled: Swift::Bool {
     get
   }
-  public var reconnectServiceUUIDs: [Swift::String] {
+  public var managesOwnReconnect: Swift::Bool {
     get
   }
-  public var managesOwnReconnect: Swift::Bool {
+  public var reconnectServiceUUIDs: [Swift::String] {
     get
   }
   final public let parser: any BluetoothKit::BluetoothProtocolParser
@@ -94,10 +123,11 @@ open class BaseReducerDevice : BluetoothKit::BluetoothDevice {
   public init(peripheral: BluetoothKit::BluetoothPeripheral, manager: any BluetoothKit::BluetoothManagerProtocol, parser: any BluetoothKit::BluetoothProtocolParser, builder: any BluetoothKit::BluetoothCommandBuilder, initialState: any BluetoothKit::DeviceState)
   open func getOTAType() -> BluetoothKit::OTAType
   open func getOTARequiredBatteryLevel() -> Swift::Int
+  open func getBLEConnectOptions() -> [Swift::String : Any]?
   open func getAudioRouteReconnectEnabled() -> Swift::Bool
+  open func getManagesOwnReconnect() -> Swift::Bool
   open func getReconnectServiceUUIDs() -> [Swift::String]
   open func onReconnectOpportunity()
-  open func getManagesOwnReconnect() -> Swift::Bool
   public func characteristicsReady(_ characteristics: [CoreBluetooth::CBUUID : CoreBluetooth::CBCharacteristic])
   public func invalidateCharacteristics()
   final public func heartbeat()
@@ -144,6 +174,7 @@ public protocol BluetoothDevice : AnyObject {
   var name: Swift::String { get }
   var otaType: BluetoothKit::OTAType { get }
   var otaRequiredBatteryLevel: Swift::Int { get }
+  var bleConnectOptions: [Swift::String : Any]? { get }
   var audioRouteReconnectEnabled: Swift::Bool { get }
   var managesOwnReconnect: Swift::Bool { get }
   var reconnectServiceUUIDs: [Swift::String] { get }
@@ -286,7 +317,7 @@ public enum BluetoothLogger {
   @objc override dynamic public init()
   final public func stopScan()
   final public func startScan(serviceUUIDs: [CoreBluetooth::CBUUID]? = nil)
-  final public func connect(_ peripheral: CoreBluetooth::CBPeripheral, timeout: Foundation::TimeInterval?)
+  final public func connect(_ peripheral: CoreBluetooth::CBPeripheral, options: [Swift::String : Any]?, timeout: Foundation::TimeInterval?)
   final public func syncPeripheralState(_ peripheral: CoreBluetooth::CBPeripheral)
   final public func disconnect(_ peripheral: CoreBluetooth::CBPeripheral)
   final public func write(_ data: Foundation::Data, to peripheral: CoreBluetooth::CBPeripheral?, characteristic uuid: CoreBluetooth::CBUUID, type: CoreBluetooth::CBCharacteristicWriteType)
@@ -316,7 +347,7 @@ public protocol BluetoothManagerProtocol : AnyObject {
   var receivedData: RxSwift::Observable<(CoreBluetooth::CBPeripheral, CoreBluetooth::CBCharacteristic?, Foundation::Data)> { get }
   func stopScan()
   func startScan(serviceUUIDs: [CoreBluetooth::CBUUID]?)
-  func connect(_ peripheral: CoreBluetooth::CBPeripheral, timeout: Foundation::TimeInterval?)
+  func connect(_ peripheral: CoreBluetooth::CBPeripheral, options: [Swift::String : Any]?, timeout: Foundation::TimeInterval?)
   func disconnect(_ peripheral: CoreBluetooth::CBPeripheral)
   func syncPeripheralState(_ peripheral: CoreBluetooth::CBPeripheral)
   func write(_ data: Foundation::Data, to peripheral: CoreBluetooth::CBPeripheral?, characteristic: CoreBluetooth::CBUUID, type: CoreBluetooth::CBCharacteristicWriteType)
@@ -327,6 +358,7 @@ public protocol BluetoothManagerProtocol : AnyObject {
 }
 extension BluetoothKit::BluetoothManagerProtocol {
   public func connect(_ peripheral: CoreBluetooth::CBPeripheral)
+  public func connect(_ peripheral: CoreBluetooth::CBPeripheral, timeout: Foundation::TimeInterval?)
 }
 public struct BluetoothPeripheral : Swift::Hashable {
   public let identifier: Foundation::UUID
@@ -371,7 +403,7 @@ final public class BluetoothService : BluetoothKit::BluetoothServiceProtocol {
   final public var connectionState: RxSwift::Observable<BluetoothKit::ConnectionState> {
     get
   }
-  final public var currentConnectionState: BluetoothKit::ConnectionState {
+  final public var connectionStateValue: BluetoothKit::ConnectionState {
     get
   }
   final public var bluetoothState: RxSwift::Observable<CoreBluetooth::CBManagerState> {
@@ -389,6 +421,9 @@ final public class BluetoothService : BluetoothKit::BluetoothServiceProtocol {
   }
   final public var persistence: any BluetoothKit::BluetoothDevicePersistence
   final public var firstConnectTimeout: Swift::Double
+  final public var bluetoothAudioPorts: [BluetoothKit::BluetoothAudioPort] {
+    get
+  }
   final public var externalAccessoryEnabled: Swift::Bool
   final public var externalAccessoryOnFirstConnect: Swift::Bool
   final public var listsExternalAccessoryCandidates: Swift::Bool
@@ -421,9 +456,6 @@ final public class BluetoothService : BluetoothKit::BluetoothServiceProtocol {
   }
   final public func retrieveConnectedPeripherals(withServiceUUIDs serviceUUIDs: [Swift::String]) -> [BluetoothKit::BluetoothPeripheral]
   final public func isSystemConnected(id: Foundation::UUID, serviceUUIDs: [Swift::String]) -> Swift::Bool
-  final public var bluetoothAudioPorts: [BluetoothKit::BluetoothAudioPort] {
-    get
-  }
   final public func cachedPeripheral(for identifier: Foundation::UUID) -> BluetoothKit::BluetoothPeripheral?
   final public func ensureDevice(for peripheral: BluetoothKit::BluetoothPeripheral, using factory: any BluetoothKit::DeviceFactory)
   final public func persistBoundDevice(_ peripheral: BluetoothKit::BluetoothPeripheral)
@@ -548,12 +580,16 @@ final public class C100CommandBuilder : BluetoothKit::BluetoothCommandBuilder {
     public static let psensor: Swift::UInt16
     public static let timeSync: Swift::UInt16
     public static let bundleIDReport: Swift::UInt16
+    public static let setGlassesLanguage: Swift::UInt16
+    public static let getGlassesLanguage: Swift::UInt16
     public static let setVideoPhotoParam: Swift::UInt16
     public static let getVideoPhotoParam: Swift::UInt16
     public static let getVideoInfo: Swift::UInt16
     public static let takePic: Swift::UInt16
     public static let videoRecord: Swift::UInt16
     public static let newFile: Swift::UInt16
+    public static let setPixSmartEIS: Swift::UInt16
+    public static let getPixSmartEIS: Swift::UInt16
     public static let getKeyEvent: Swift::UInt16
     public static let setKeyEvent: Swift::UInt16
     public static let reportKeyEvent: Swift::UInt16
@@ -687,7 +723,7 @@ extension BluetoothKit::C100DeviceState {
   }
   public struct VideoSettings : Swift::Equatable {
     public enum Duration : Swift::UInt8, Swift::CaseIterable {
-      case s15, s30, m1, m3
+      case s15, s30, m1, m2
       public init?(rawValue: Swift::UInt8)
       public typealias AllCases = [BluetoothKit::C100DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration]
       public typealias RawValue = Swift::UInt8
@@ -797,6 +833,21 @@ extension BluetoothKit::C100DeviceState {
     public static let mediaForwardVolumeDown: Swift::String
     public static let mediaControl: Swift::String
   }
+  public enum GlassesLanguage : Swift::UInt8, Swift::Codable, Swift::Equatable {
+    case zh_cn
+    case en
+    case ja
+    public static let `default`: BluetoothKit::C100DeviceState.BluetoothKit::GlassesLanguage
+    public var value: Swift::String {
+      get
+    }
+    public init?(value: Swift::String)
+    public init?(rawValue: Swift::UInt8)
+    public typealias RawValue = Swift::UInt8
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+  }
 }
 public struct C100DeviceState : BluetoothKit::DeviceState, Swift::Equatable {
   public enum Activity : Swift::String, Swift::Equatable {
@@ -822,6 +873,8 @@ public struct C100DeviceState : BluetoothKit::DeviceState, Swift::Equatable {
   public var storage: BluetoothKit::C100DeviceState.BluetoothKit::Storage?
   public var videoSettings: BluetoothKit::C100DeviceState.BluetoothKit::VideoSettings?
   public var videoRecording: BluetoothKit::C100DeviceState.BluetoothKit::VideoRecording
+  public var pixSmartEISOn: Swift::Bool?
+  public var glassesLanguage: BluetoothKit::C100DeviceState.BluetoothKit::GlassesLanguage?
   public var keyMappings: [BluetoothKit::C100DeviceState.BluetoothKit::KeyEventID : BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID]
   public var pendingMediaCount: Swift::Int
   public var pendingAudioCount: Swift::Int
@@ -851,6 +904,10 @@ public enum C100DeviceEvent : BluetoothKit::DeviceEvent {
   case bundleIDReportResult(success: Swift::Bool)
   case videoRecordState(BluetoothKit::C100DeviceState.BluetoothKit::VideoRecording)
   case newFile(name: Swift::String, size: Swift::UInt32, mediaType: Swift::UInt8)
+  case pixSmartEISSetResult(success: Swift::Bool)
+  case pixSmartEIS(enabled: Swift::Bool)
+  case glassesLanguageSetResult(success: Swift::Bool)
+  case glassesLanguage(BluetoothKit::C100DeviceState.BluetoothKit::GlassesLanguage)
   case keyMappings([BluetoothKit::C100DeviceState.BluetoothKit::KeyEventID : BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID])
   case setKeyMappingResult(success: Swift::Bool)
   case keyEvent(event: BluetoothKit::C100DeviceState.BluetoothKit::KeyEventID, action: BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID)
@@ -868,6 +925,7 @@ public enum C100DeviceEvent : BluetoothKit::DeviceEvent {
   case glassAIEvent(BluetoothKit::C100DeviceEvent.BluetoothKit::GlassAIEvent)
   public enum GlassAIEvent : Swift::UInt8 {
     case interrupt
+    case cameraBlocked
     public init?(rawValue: Swift::UInt8)
     public typealias RawValue = Swift::UInt8
     public var rawValue: Swift::UInt8 {
@@ -919,6 +977,10 @@ public enum C100DeviceCommand : BluetoothKit::DeviceCommand {
   case queryVideoSettings
   case takePicture
   case toggleVideoRecord
+  case setPixSmartEIS(enabled: Swift::Bool)
+  case queryPixSmartEIS
+  case setGlassesLanguage(BluetoothKit::C100DeviceState.BluetoothKit::GlassesLanguage)
+  case queryGlassesLanguage
   case setPsensor(enabled: Swift::Bool)
   case queryKeyMappings
   case setKeyMapping(event: BluetoothKit::C100DeviceState.BluetoothKit::KeyEventID, action: BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID)
@@ -1055,6 +1117,9 @@ public struct C100SyncedFile {
   public let kind: BluetoothKit::C100SyncedFile.BluetoothKit::Kind
   public let createdAt: Foundation::Date?
   public let duration: Foundation::TimeInterval?
+  public let photoAccel: BluetoothKit::C100PhotoAccel?
+  public let videoEisLocal: BluetoothKit::C100VideoEisLocal?
+  public init(name: Swift::String, localURL: Foundation::URL, size: Swift::Int, kind: BluetoothKit::C100SyncedFile.BluetoothKit::Kind, createdAt: Foundation::Date?, duration: Foundation::TimeInterval?, photoAccel: BluetoothKit::C100PhotoAccel? = nil, videoEisLocal: BluetoothKit::C100VideoEisLocal? = nil)
 }
 @_hasMissingDesignatedInitializers final public class C100FileSyncEngine {
   public enum State : Swift::Equatable {
@@ -1089,6 +1154,7 @@ public struct C100SyncedFile {
     public var hotspotSettleDelay: Swift::Double
     public var maxHttpRetries: Swift::Int
     public var httpRetryDelay: Swift::Double
+    public var maxEisRetryPerFile: Swift::Int
     public init()
   }
   final public var stateStream: RxSwift::Observable<BluetoothKit::C100FileSyncEngine.BluetoothKit::State> {
@@ -1317,6 +1383,35 @@ final public class C100PendingMediaStore {
   final public func update(item: BluetoothKit::C100PendingMediaItem)
   @objc deinit
 }
+public struct C100PhotoAccel : Swift::Equatable, Swift::Codable, Swift::Sendable {
+  public let x: Swift::Float
+  public let y: Swift::Float
+  public let z: Swift::Float
+  public let anchorTime: Swift::Int64?
+  public init(x: Swift::Float, y: Swift::Float, z: Swift::Float, anchorTime: Swift::Int64? = nil)
+  public static func == (a: BluetoothKit::C100PhotoAccel, b: BluetoothKit::C100PhotoAccel) -> Swift::Bool
+  public func encode(to encoder: any Swift::Encoder) throws
+  public init(from decoder: any Swift::Decoder) throws
+}
+public struct C100VideoEis : Swift::Equatable, Swift::Sendable {
+  public let name: Swift::String
+  public let url: Swift::String?
+  public let size: Swift::Int?
+  public let crc32: Swift::UInt32?
+  public init(name: Swift::String, url: Swift::String? = nil, size: Swift::Int? = nil, crc32: Swift::UInt32? = nil)
+  public static func == (a: BluetoothKit::C100VideoEis, b: BluetoothKit::C100VideoEis) -> Swift::Bool
+}
+public struct C100VideoEisLocal : Swift::Equatable, Swift::Sendable {
+  public let name: Swift::String
+  public let localURL: Foundation::URL
+  public let size: Swift::Int
+  public init(name: Swift::String, localURL: Foundation::URL, size: Swift::Int)
+  public static func == (a: BluetoothKit::C100VideoEisLocal, b: BluetoothKit::C100VideoEisLocal) -> Swift::Bool
+}
+public enum C100FileListExtras {
+  public static func photoAccel(from dict: [Swift::String : Any]?) -> BluetoothKit::C100PhotoAccel?
+  public static func eisData(from dict: [Swift::String : Any]?, parseCRC: (Swift::String) -> Swift::UInt32?) -> BluetoothKit::C100VideoEis?
+}
 final public class C100ThumbPackProcessor {
   public enum State : Swift::Equatable {
     case idle
@@ -1392,168 +1487,28 @@ final public class C100WifiSession {
   final public func finish(result: Swift::UInt8)
   final public func cancel()
 }
-public enum C110BESGATT {
-  public static let service: CoreBluetooth::CBUUID
-  public static let channel: CoreBluetooth::CBUUID
+public enum C110ClassicLinkStatus : Swift::Equatable {
+  case classicAudio(verified: Swift::Bool)
+  case offline
+  public var isOnline: Swift::Bool {
+    get
+  }
+  public static func == (a: BluetoothKit::C110ClassicLinkStatus, b: BluetoothKit::C110ClassicLinkStatus) -> Swift::Bool
 }
-extension BluetoothKit::C110Device {
-  final public func sendBES(_ data: Foundation::Data, withResponse: Swift::Bool)
-  final public var besDataStream: RxSwift::Observable<Foundation::Data> {
-    get
-  }
-  final public var reconnectedStream: RxSwift::Observable<Swift::Void> {
-    get
-  }
+final public class C110ClassicLinkDetector {
+  public static let shared: BluetoothKit::C110ClassicLinkDetector
+  public init(service: BluetoothKit::BluetoothService = .shared, serviceUUID: Swift::String = serviceUUIDString, defaults: Foundation::UserDefaults = .standard)
+  final public func status(for deviceID: Foundation::UUID) -> BluetoothKit::C110ClassicLinkStatus
+  final public func currentPortKeys() -> Swift::Set<Swift::String>
+  final public func classicName(for deviceID: Foundation::UUID) -> Swift::String?
+  final public func learn(deviceID: Foundation::UUID)
+  final public func noteMAC(_ mac: Swift::String, deviceID: Foundation::UUID)
+  final public func invalidateInferredPorts(deviceID: Foundation::UUID)
+  @objc deinit
 }
-public enum C110Cmd : Swift::UInt16 {
-  case productInfo
-  case productModel
-  case firmwareVersion
-  case hardwareInfo
-  case supportedFeatures
-  case deviceName
-  case heartbeat
-  case setCmei
-  case getCmei
-  case getBattery
-  case batteryNotify
-  case getANC
-  case setANC
-  case ancNotify
-  case getWearDetect
-  case setWearDetect
-  case getGameMode
-  case setGameMode
-  case gameModeNotify
-  case getEQ
-  case setEQ
-  case getKeyMapping
-  case setKeyMapping
-  case reportKeyAction
-  case findDevice
-  case findDeviceNotify
-  case appAIDialog
-  case deviceAIDialog
-  case aiDialogEvent
-  case aiDialogHint
-  case aiVoiceTrigger
-  case aiVoiceHint
-  case aiProcessingHint
-  case setWifiSSID
-  case setWifiPassword
-  case setTime
-  case reportConnStatus
-  case fileCountUpdate
-  case captureStart
-  case captureComplete
-  case rtspStream
-  case diskCapacityAPI
-  case videoPreview
-  case wifiAPControl
-  case reportAPSSID
-  case reportAPPassword
-  case reportWifiAPI
-  case setBindCode
-  case getBindCode
-  case clearFiles
-  case clearResult
-  case wifiStatus
-  case setStabilization
-  case getStabilization
-  case getFileCount
-  case reportAPMAC
-  case reportP2PSupport
-  case wifiP2PControl
-  case reportP2PName
-  case reportP2PMAC
-  case getDiskInfo
-  case setVideoParams
-  case getVideoParams
-  case setPhotoParams
-  case getPhotoParams
-  case setVideoResolution
-  case reportVideoResolution
-  case reportStabilizationSupport
-  case calibrateGyro
-  case setDeviceSN
-  case getDeviceSN
-  case setOrientation
-  case orientationNotify
-  case setISPLogSave
-  case ispLogSaveNotify
-  case reqGetISPLog
-  case bleRecordTrigger
-  case bleRecordHint
-  case getCallStatus
-  case bleAudioControl
-  case bleAudioData
-  case bleRecordAudioData
-  case getOTAInfo
-  case reportFirmwareVer
-  case startOTA
-  case otaComplete
-  case startFileUpload
-  case fileData
-  case fileUploadEnd
-  case retryFileData
-  case stopFileUpload
-  case deviceControl
-  case recordingStatus
-  case localRecordStatus
-  case getRecordingList
-  case deleteRecording
-  case deleteAllRecordings
-  case recordingControl
-  case recordingNotify
-  case setRecordingHint
-  case getRecordingHint
-  case recordingCountNotify
-  case setAutoRecording
-  case getAutoRecording
-  case getVoiceWakeList
-  case getVoiceWakeSetting
-  case setVoiceWakeSetting
-  public var cmdID: Swift::UInt16 {
-    get
-  }
-  public init?(rawValue: Swift::UInt16)
-  public typealias RawValue = Swift::UInt16
-  public var rawValue: Swift::UInt16 {
-    get
-  }
-}
-public enum C110ControlAction : Swift::UInt8 {
-  case takePhoto
-  case startVideo
-  case stopVideo
-  case startStream
-  case stopStream
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-}
-public enum C110AudioMode : Swift::UInt8 {
-  case off
-  case aiMono8k
-  case aiMono16k
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-}
-public enum C110CaptureResolution : Swift::UInt8 {
-  case r480x360
-  case r640x480
-  case r1280x720
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-}
+public let serviceUUIDString: Swift::String
+public let notifyUUIDString: Swift::String
+public let writeUUIDString: Swift::String
 final public class C110CommandBuilder : BluetoothKit::BluetoothCommandBuilder {
   public init()
   final public var firmwareChunkPayloadBytes: Swift::Int
@@ -1572,6 +1527,41 @@ final public class C110CommandParser : BluetoothKit::BluetoothProtocolParser {
   final public func parse(data: Foundation::Data) -> [any BluetoothKit::DeviceEvent]
   @objc deinit
 }
+public enum C110ConnectState {
+  case idle
+  case bluetoothOff
+  case bluetoothUnauthorized
+  case searching
+  case needConnectClassic
+  case connecting(BluetoothKit::BluetoothPeripheral)
+  case connected(BluetoothKit::BluetoothPeripheral)
+  case failed(reason: Swift::String)
+}
+final public class C110ConnectCoordinator {
+  final public var stateStream: RxSwift::Observable<BluetoothKit::C110ConnectState> {
+    get
+  }
+  final public var stateValue: BluetoothKit::C110ConnectState {
+    get
+  }
+  final public var isSessionActive: Swift::Bool {
+    get
+  }
+  public init(service: BluetoothKit::BluetoothService = .shared, deviceID: Foundation::UUID? = nil, detector: BluetoothKit::C110ClassicLinkDetector = .shared, maxRetries: Swift::Int = 4, firstAttemptTimeout: Foundation::TimeInterval = 1.0, kickRetryTimeout: Foundation::TimeInterval = 3.0, steadyRetryTimeout: Foundation::TimeInterval = 30.0, readyConfirmTimeout: Foundation::TimeInterval = 10.0)
+  final public func reconnect(deviceID: Foundation::UUID, userInitiated: Swift::Bool = false, assumeClassicConnected: Swift::Bool = false)
+  final public func cancel()
+  final public func confirmReady()
+  @objc deinit
+}
+final public class C110ReconnectWatcher {
+  @objc deinit
+  public init(service: BluetoothKit::BluetoothService = .shared, deviceID: Foundation::UUID, detector: BluetoothKit::C110ClassicLinkDetector = .shared, coordinator: BluetoothKit::C110ConnectCoordinator, pollInterval: Foundation::TimeInterval = 2.0)
+  final public func stop()
+  final public func start()
+  final public func suspend()
+  final public func resume()
+  final public func noteOpportunity()
+}
 final public class C110Device : BluetoothKit::BaseReducerDevice {
   override final public var productCode: Swift::String {
     get
@@ -1579,121 +1569,295 @@ final public class C110Device : BluetoothKit::BaseReducerDevice {
   override final public var typeIdentifier: Swift::String {
     get
   }
-  override final public func getOTARequiredBatteryLevel() -> Swift::Int
+  final public var connectCoordinator: BluetoothKit::C110ConnectCoordinator {
+    get
+    set
+  }
+  final public var reconnectWatcher: BluetoothKit::C110ReconnectWatcher {
+    get
+  }
+  weak final public var wifiSession: BluetoothKit::C110WifiSession? {
+    get
+  }
+  final public var isSoftAPBusy: Swift::Bool {
+    get
+  }
+  final public var softAPOwner: BluetoothKit::C110WifiSession.BluetoothKit::SoftAPOwner? {
+    get
+  }
   public init(peripheral: BluetoothKit::BluetoothPeripheral, manager: any BluetoothKit::BluetoothManagerProtocol)
-  final public var keyEventStream: RxSwift::Observable<BluetoothKit::C110PhysicalKeyEvent> {
-    get
-  }
-  final public var bleRecordAudioStream: RxSwift::Observable<Foundation::Data> {
-    get
-  }
+  override final public func getOTARequiredBatteryLevel() -> Swift::Int
+  override final public func getBLEConnectOptions() -> [Swift::String : Any]?
+  override final public func getAudioRouteReconnectEnabled() -> Swift::Bool
+  override final public func getManagesOwnReconnect() -> Swift::Bool
+  override final public func getReconnectServiceUUIDs() -> [Swift::String]
+  override final public func onReconnectOpportunity()
+  final public func suspendAutoReconnect()
+  final public func resumeAutoReconnect()
   final public var bleRecordTriggerStream: RxSwift::Observable<Swift::Bool> {
     get
   }
-  final public var bleAudioDataStream: RxSwift::Observable<Foundation::Data> {
-    get
-  }
-  final public var aiVoiceDialogRequestStream: RxSwift::Observable<Swift::Bool> {
-    get
-  }
-  final public var imageCaptureCompleteStream: RxSwift::Observable<BluetoothKit::C110ImageCaptureResult> {
-    get
-  }
-  final public var fileUploadStartedStream: RxSwift::Observable<BluetoothKit::C110FileUploadInfo> {
-    get
-  }
-  final public var fileDataPacketStream: RxSwift::Observable<BluetoothKit::C110FileDataPacket> {
-    get
-  }
-  final public var fileUploadEndStream: RxSwift::Observable<Swift::Void> {
-    get
-  }
-  override final public func reduce(current: any BluetoothKit::DeviceState, event: any BluetoothKit::DeviceEvent) -> any BluetoothKit::DeviceState
   final public func reportUnimportedCount(_ count: Swift::Int)
+  override final public func reduce(current: any BluetoothKit::DeviceState, event: any BluetoothKit::DeviceEvent) -> any BluetoothKit::DeviceState
   @objc deinit
 }
-public enum C110ImageCaptureResult {
-  case httpURL(Swift::String)
-  case bleFileTransfer(handle: Swift::UInt8)
+public enum C110CaptureResolution : Swift::UInt8 {
+  case r480x360
+  case r640x480
+  case r1280x720
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
 }
-public struct C110FileUploadInfo : Swift::Equatable {
-  public let totalLength: Swift::Int
-  public let packetSize: Swift::Int
-  public let totalPackets: Swift::Int
-  public static func == (a: BluetoothKit::C110FileUploadInfo, b: BluetoothKit::C110FileUploadInfo) -> Swift::Bool
+public enum C110CallStatus : Swift::UInt8 {
+  case off
+  case ring
+  case receive
+  case receiveBuiltIn
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
 }
-public struct C110FileDataPacket {
-  public let totalPackets: Swift::Int
-  public let packetIndex: Swift::Int
-  public let data: Foundation::Data
+public enum C110AudioMode : Swift::UInt8 {
+  case off
+  case aiMono8k
+  case aiMono16k
+  public init?(rawValue: Swift::UInt8)
+  public typealias RawValue = Swift::UInt8
+  public var rawValue: Swift::UInt8 {
+    get
+  }
 }
 public enum C110DeviceCommand : BluetoothKit::DeviceCommand {
-  case queryFirmwareVersion
-  case queryBattery
-  case queryANC
-  case getCmei
-  case setCmei(Swift::String)
-  case syncTime
-  case capturePhoto
-  case startRecording
-  case stopRecording
-  case setStabilization(Swift::Bool)
-  case getStabilization
-  case setWearDetect(Swift::Bool)
-  case getWearDetect
-  case setANC(BluetoothKit::C110ANCMode)
-  case startStream
-  case stopStream
-  case getSupportedFeatures
-  case findDevice
-  case getKeyMapping
-  case setKeyMapping([BluetoothKit::C110KeyMapping])
-  case setWifiAP(Swift::Bool)
-  case setWifiP2P(Swift::Bool)
-  case startVideoPreview
-  case stopVideoPreview
-  case getDiskInfo
-  case setVideoParams(durationSeconds: Swift::UInt32)
-  case getVideoParams
-  case setPhotoParams(burstCount: Swift::UInt8)
-  case setOrientation(isLandscape: Swift::Bool)
-  case setDeviceSN(Swift::String)
-  case getDeviceSN
-  case setISPLogSave(Swift::Bool)
-  case reqGetISPLog(enable: Swift::Bool)
-  case setBleRecordHint(Swift::Bool)
-  case setRecordingHint(Swift::Bool)
+  case reqSyncTime(_: Swift::Int64)
+  case respSyncTime
+  @available(*, deprecated, renamed: "reqSetDeviceSN", message: "reqSetDeviceSN 不可用")
+  case reqSetDeviceSN(_: Swift::String)
+  @available(*, deprecated, renamed: "respSetDeviceSN", message: "respSetDeviceSN 不可用")
+  case respSetDeviceSN
+  case reqGetDeviceSN
+  case respGetDeviceSN(_: Swift::String)
+  case reqGetProductInfo
+  case respGetProductInfo(_: Swift::String, _: Swift::String, _: Swift::String)
+  case reqGetProductModel
+  case respGetProductModel(_: Swift::String)
+  case reqGetFWVersion
+  case respGetFWVersion(_: Swift::String)
+  case reqGetHWInfo
+  case respGetHWInfo(_: Swift::String)
+  @available(*, deprecated, renamed: "reqSetCmei", message: "reqSetCmei 不可用")
+  case reqSetCmei(_: Swift::String)
+  @available(*, deprecated, renamed: "respSetCmei", message: "respSetCmei 不可用")
+  case respSetCmei
+  case reqGetCmei
+  case respGetCmei(_: BluetoothKit::C110DeviceState.BluetoothKit::CMEIInfo)
+  case reqGetDeviceName
+  case respGetDeviceName(_: Swift::String)
+  case reqGetSupportedFeatures
+  case respGetSupportedFeatures(_: BluetoothKit::C110DeviceState.BluetoothKit::SupportFeatures)
+  case reqHeartbeat
+  case respHeartbeat
+  case reqGetBattery
+  case respGetBattery(_: BluetoothKit::C110DeviceState.BluetoothKit::BatteryInfo)
+  case notifyBattery(_: BluetoothKit::C110DeviceState.BluetoothKit::CMEIInfo)
+  case reqGetDiskInfo
+  case respGetDiskInfo(_: BluetoothKit::C110DeviceState.BluetoothKit::DiskInfo)
+  case reqSetANC(_: BluetoothKit::C110DeviceState.BluetoothKit::ANCMode)
+  case respSetANC
+  case reqGetANC
+  case respGetANC(_: BluetoothKit::C110DeviceState.BluetoothKit::ANCMode)
+  case notifyANC(_: BluetoothKit::C110DeviceState.BluetoothKit::ANCMode)
+  case notifyStabilizationEnable(_: Swift::Bool)
+  case reqSetStabilization(_: Swift::Bool)
+  case respSetStabilization
+  case reqGetFileCount
+  case respGetFileCount(_: Swift::Int)
+  case notifyFileCount(_: Swift::Int)
+  case reqSetGlassLanguage(_: BluetoothKit::C110DeviceState.BluetoothKit::GlassesLanguage)
+  case respSetGlassLanguage
+  case reqGetGlassLanguage
+  case respGetGlassLanguage(_: BluetoothKit::C110DeviceState.BluetoothKit::GlassesLanguage)
+  case notifyVideoRecording(_: Swift::Bool)
+  case reqSetVideoDuration(_: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration)
+  case respSetVideoDuration
+  case reqGetVideoDuration
+  case respGetVideoDuration(_: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration?)
+  case reqSetVideoResolution(_: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Resolution)
+  case respSetVideoResolution
+  case reqGetVideoResolution
+  case notifyVideoResolution(_: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Resolution?)
+  case reqGetStabilization
+  case respGetStabilization(_: Swift::Bool)
+  case reqSetCameraOrientation(_: Swift::Bool)
+  case respSetCameraOrientation
+  case notifyCameraOrientation(_: Swift::Bool)
+  case reqSetPhotoBurst(_: Swift::UInt8)
+  case respSetPhotoBurst
+  case reqGetPhotoBurst
+  case respGetPhotoBurst(_: Swift::UInt8)
+  case reqSetWearDetect(_: Swift::Bool)
+  case respSetWearDetect
+  case reqGetWearDetect
+  case respGetWearDetect(_: Swift::Bool)
+  case notifyWearState(_: Swift::Bool)
+  case reqSetGameMode(_: Swift::Bool)
+  case respSetGameMode
+  case reqGetGameMode
+  case respGetGameMode(_: Swift::Bool)
+  case notifyGameMode(_: Swift::Bool)
+  case reqSetEQ(_: Swift::UInt8)
+  case respSetEQ
+  case reqGetEQ
+  case respGetEQ(_: Swift::UInt8)
+  case reqSetKeyMapping(_: [BluetoothKit::C110KeyFuncMap])
+  case respSetKeyMapping
+  case reqGetKeyMapping
+  case respGetKeyMapping(_: [BluetoothKit::C110KeyFuncMap])
+  case notifyKeyAction(_: BluetoothKit::C110KeyActionMap)
+  case reqSetTPSlideControl(_: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl)
+  case respSetTPSlideControl
+  case reqGetTPSlideControl
+  case respGetTPSlideControl(_: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl)
+  case reqSetTPTapControl(_: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl)
+  case respSetTPTapControl
+  case reqGetTPTapControl
+  case respGetTPTapControl(_: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl)
+  case reqFindDevice(_: Swift::Bool, rightStart: Swift::Bool)
+  case notifyFindDeviceStop(_: Swift::Bool)
+  case notifyAIDialogue(_: Swift::Bool)
+  case reqSetAIDialogue(_: Swift::Bool)
+  case respSetAIDialogue
+  case notifyAIDialogueEvent(_: Swift::UInt8)
+  case reqSetAIDialogueHint(_: Swift::Bool)
+  case notifyAIRealtimeDialogueEvent(_: Swift::Bool)
+  case reqSetAIVoiceHint(_: Swift::Bool)
+  case respSetAIVoiceHint
+  case reqPlayAIProcessingHint
+  case respPlayAIProcessingHint
+  case reportConnStatus
+  case diskCapacityAPI
+  case reqStartImageCapture(BluetoothKit::C110CaptureResolution)
+  case respStartImageCapture(_: Foundation::Data)
+  case notifyImageCaptureDone(_: BluetoothKit::FileTransferInfo)
+  case reqVideoPreview(_: Swift::Bool)
+  case respVideoPreview
+  case notifyVideoPreviewUrl(_: Swift::String)
+  case notifyWifiState(_: BluetoothKit::C110DeviceState.BluetoothKit::WifiState)
+  case reqSetWifiAP(_: Swift::Bool)
+  case respSetWifiAP
+  case notifyWifiAPSSID(_: Swift::String)
+  case notifyWifiAPPassword(_: Swift::String)
+  case notifyWifiAPAPI(_: Swift::String)
+  case notifyWifiAPMAC(_: Swift::String)
+  case notifyWifiP2PEnable(_: Swift::Bool)
+  case reqSetWifiP2P(_: Swift::Bool)
+  case respSetWifiP2P
+  case notifyWifiP2PName(_: Swift::String)
+  case notifyWifiP2PMAC(_: Swift::String)
+  @available(*, deprecated, renamed: "reqSetCalibrationGyroscope", message: "reqSetCalibrationGyroscope 不可用")
+  case reqSetCalibrationGyroscope(_: Swift::Bool)
+  case respSetCalibrationGyroscope
+  case reqSetISPLogSave(_: Swift::Bool)
+  case respSetISPLogSave
+  case notifyISPLogSave(_: Swift::Bool)
+  case reqGetISPLog(_: Swift::Bool)
+  case respGetISPLog
+  case reqGetOTAInfo
+  case respGetOTAInfo(_: [Swift::Int])
+  case notifyOTAInfo(_: [BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo], _: Swift::String)
+  case reqStartOTA(_: Swift::Int)
+  case respStartOTA
+  case notifyOTAComplete
+  case reqStartUploadFile(_: Swift::UInt8, _: Swift::String? = nil)
+  case respStartUploadFile(_: BluetoothKit::FileUploadInfo)
+  case notifyUploadingFileData(_: BluetoothKit::FileDataPacket)
+  case notifyStopUploadFile
+  case reqGetFileData(_: Swift::Int, _: Swift::UInt8, _: Swift::String? = nil)
+  case respGetFileData
+  case reqAbortUploadFile(_: Swift::UInt8, _: Swift::String? = nil)
+  case respAbortUploadFile
+  case reqSetRecordTrigger(_: Swift::Bool)
+  case reqGetCallStatus
+  case respGetCallStatus(_: BluetoothKit::C110CallStatus)
+  case reqSetBleAudioMode(_: BluetoothKit::C110AudioMode)
+  case respSetBleAudioMode
+  case notifyBleAudioData(_: Swift::UInt8, _: Foundation::Data)
+  case notifyBleRecordAudioData(_: Swift::UInt8, _: Foundation::Data)
+  case reqDeviceControl(_: BluetoothKit::C110DeviceControlAction)
+  case respDeviceControl
+  case notifyAudioRecording(_: Swift::Bool)
+  case getRecordingList
+  case deleteRecording(Swift::String)
+  case deleteAllRecordings
+  case getRecordTrigger
+  case setRecordingControl(_: Swift::Bool)
+  case getRecordingControl
+  case setRecordingHint(_: Swift::Bool)
   case getRecordingHint
-  case setAutoRecording(Swift::Bool)
+  case setAutoRecording(_: Swift::Bool)
   case getAutoRecording
-  case setAIVoiceHint(Swift::Bool)
-  case playAIProcessingHint
-  case setBleAudioControl(BluetoothKit::C110AudioMode)
-  case startImageCapture(BluetoothKit::C110CaptureResolution)
-  case startFileUpload(handle: Swift::UInt8, filename: Swift::String? = nil)
-  case retryFileData(packetIndex: Swift::Int, handle: Swift::UInt8, filename: Swift::String? = nil)
-  case abortFileUpload(handle: Swift::UInt8, filename: Swift::String? = nil)
+  case getRecordingCount
   case getVoiceWakeList
   case getVoiceWakeSetting
   case setVoiceWakeSetting(masterOn: Swift::Bool, mask: Swift::UInt32)
-  case startOTA(entryCount: Swift::Int)
+  case reqSetBindCode(_: Swift::String)
+  case respSetBindCode(_: Swift::Bool)
+  case reqGetBindCode
+  case respGetBindCode(_: Swift::String)
+  case reqClearBindCode
+  case respClearBindCode(_: Swift::Bool)
+  @available(*, deprecated, renamed: "reqClearFiles", message: "reqClearFiles 不可用")
+  case reqClearFiles
+  case respClearFiles(_: Swift::UInt8)
+  @available(*, deprecated, renamed: "notifyClearResult", message: "notifyClearResults 不可用")
+  case notifyClearResult(_: Swift::Bool)
+  case reqFactoryReset
+  case respFactoryReset(_: Swift::Bool)
 }
 public enum C110DeviceEvent : BluetoothKit::DeviceEvent {
-  case frame(cmdID: Swift::UInt16, type: BluetoothKit::C110FrameType, payload: Foundation::Data)
+  case frame(cmd: BluetoothKit::C110DeviceCommand, type: BluetoothKit::C110FrameType)
+  case aFrame(cmdId: Swift::UInt16, type: BluetoothKit::C110FrameType, payload: Foundation::Data)
   case protocolError(Swift::String)
 }
 extension BluetoothKit::C110DeviceState {
   public enum Activity : Swift::String, Swift::Equatable {
     case idle
     case ready
-    case recording
+    case videoRecording
+    case audioRecording
     case syncing
     case upgrading
+    public var isBusy: Swift::Bool {
+      get
+    }
     public init?(rawValue: Swift::String)
     public typealias RawValue = Swift::String
     public var rawValue: Swift::String {
       get
     }
+  }
+  public struct SupportFeatures : Swift::Equatable, Swift::Codable {
+    public var ancEnable: Swift::Bool
+    public var wearCheck: Swift::Bool
+    public var gameMode: Swift::Bool
+    public var eqEnable: Swift::Bool
+    public var keySetting: Swift::Bool
+    public var findDevice: Swift::Bool
+    public var aiChat: Swift::Bool
+    public var wifi: Swift::Bool
+    public var bleAudio: Swift::Bool
+    public var ota: Swift::Bool
+    public var deviceControl: Swift::Bool
+    public var localRecord: Swift::Bool
+    public var voiceWakeup: Swift::Bool
+    public static func parse(_ data: Foundation::Data) -> BluetoothKit::C110DeviceState.BluetoothKit::SupportFeatures?
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::SupportFeatures, b: BluetoothKit::C110DeviceState.BluetoothKit::SupportFeatures) -> Swift::Bool
+    public func encode(to encoder: any Swift::Encoder) throws
+    public init(from decoder: any Swift::Decoder) throws
   }
   public struct CMEIInfo : Swift::Equatable, Swift::Codable {
     public let deviceNo: Swift::String
@@ -1703,17 +1867,40 @@ extension BluetoothKit::C110DeviceState {
     public func encode(to encoder: any Swift::Encoder) throws
     public init(from decoder: any Swift::Decoder) throws
   }
+  public struct OTAFirmwareInfo : Swift::Equatable, Swift::Codable {
+    public enum OTAProtocol : Swift::UInt8, Swift::Codable {
+      case wifi
+      case hengxuan
+      case zhongke
+      case jieli
+      case unknown
+      public init?(rawValue: Swift::UInt8)
+      public typealias RawValue = Swift::UInt8
+      public var rawValue: Swift::UInt8 {
+        get
+      }
+    }
+    public let index: Swift::Int
+    public let otaProtocolID: Swift::UInt8
+    public let otaProtocol: BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo.BluetoothKit::OTAProtocol
+    public let version: Swift::String
+    public init(index: Swift::Int, protocolID: Swift::UInt8, version: Swift::String)
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo, b: BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo) -> Swift::Bool
+    public func encode(to encoder: any Swift::Encoder) throws
+    public init(from decoder: any Swift::Decoder) throws
+  }
   public struct FirmwareInfo : Swift::Equatable, Swift::Codable {
     public var model: Swift::String?
     public var fwVersion: Swift::String?
     public var mac: Swift::String?
-    public var hwVersion: Swift::String?
+    public var hwInfo: Swift::String?
     public var sn: Swift::String?
     public var cmei: BluetoothKit::C110DeviceState.BluetoothKit::CMEIInfo?
-    public var deviceSn: Swift::String? {
+    public var otaInfos: [BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo]?
+    public var sumFwVersion: Swift::String?
+    public var displayFwVersion: Swift::String? {
       get
     }
-    public init(model: Swift::String? = nil, fwVersion: Swift::String? = nil, mac: Swift::String? = nil, hwVersion: Swift::String? = nil, sn: Swift::String? = nil, cmei: BluetoothKit::C110DeviceState.BluetoothKit::CMEIInfo? = nil)
     public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::FirmwareInfo, b: BluetoothKit::C110DeviceState.BluetoothKit::FirmwareInfo) -> Swift::Bool
     public func encode(to encoder: any Swift::Encoder) throws
     public init(from decoder: any Swift::Decoder) throws
@@ -1728,6 +1915,9 @@ extension BluetoothKit::C110DeviceState {
       public init(from decoder: any Swift::Decoder) throws
     }
     public var percent: Swift::Int {
+      get
+    }
+    public var minPercent: Swift::Int {
       get
     }
     public var isCharging: Swift::Bool {
@@ -1757,26 +1947,20 @@ extension BluetoothKit::C110DeviceState {
     public func encode(to encoder: any Swift::Encoder) throws
     public init(from decoder: any Swift::Decoder) throws
   }
-  public enum VideoRecording : Swift::Equatable {
-    case idle
-    case started
-    case recording(durationSeconds: Swift::UInt32)
-    case stopped(durationSeconds: Swift::UInt32)
-    case error(code: Swift::UInt8, durationSeconds: Swift::UInt32)
-    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::VideoRecording, b: BluetoothKit::C110DeviceState.BluetoothKit::VideoRecording) -> Swift::Bool
-  }
   public struct VideoSettings : Swift::Equatable {
     public enum Duration : Swift::UInt8, Swift::CaseIterable {
       case s15
       case s30
       case m1
       case m3
+      public static let `default`: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration
       public var value: Swift::String {
         get
       }
       public var cmdValue: Swift::UInt32 {
         get
       }
+      public static func duration(for cmdValue: Swift::UInt32) -> BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration?
       public init?(rawValue: Swift::UInt8)
       public typealias AllCases = [BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration]
       public typealias RawValue = Swift::UInt8
@@ -1788,11 +1972,14 @@ extension BluetoothKit::C110DeviceState {
       }
     }
     public enum Resolution : Swift::UInt8, Swift::CaseIterable {
-      case r16x9
-      case r9x16
-      case r4x3
-      case r3x4
+      case r2080x1560
+      case r3840x2160
+      case r1920x1080
+      public static let `default`: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Resolution
       public var value: Swift::String {
+        get
+      }
+      public var fps: Swift::Int {
         get
       }
       public init?(rawValue: Swift::UInt8)
@@ -1818,9 +2005,16 @@ extension BluetoothKit::C110DeviceState {
         get
       }
     }
-    public enum PhotoResolution : Swift::UInt8, Swift::CaseIterable {
-      case r4032x3024
-      case r3024x4032
+    public var duration: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration
+    public var resolution: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Resolution
+    public var encoder: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Encoder
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings, b: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings) -> Swift::Bool
+  }
+  public struct PhotoSettings : Swift::Equatable {
+    public enum Resolution : Swift::UInt8, Swift::CaseIterable {
+      case r4000x3000
+      case r3000x4000
+      public static let `default`: BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution
       public var value: Swift::String {
         get
       }
@@ -1828,21 +2022,54 @@ extension BluetoothKit::C110DeviceState {
         get
       }
       public init?(rawValue: Swift::UInt8)
-      public typealias AllCases = [BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution]
+      public typealias AllCases = [BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution]
       public typealias RawValue = Swift::UInt8
-      nonisolated public static var allCases: [BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution] {
+      nonisolated public static var allCases: [BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution] {
         get
       }
       public var rawValue: Swift::UInt8 {
         get
       }
     }
-    public let duration: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration
-    public let resolution: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Resolution
-    public let encoder: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Encoder
-    public let photoResolution: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution
-    public init(duration: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration, resolution: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Resolution, encoder: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Encoder = .h264, photoResolution: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution = .r4032x3024)
-    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings, b: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings) -> Swift::Bool
+    public var resolution: BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution
+    public var burst: Swift::UInt8
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings, b: BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings) -> Swift::Bool
+  }
+  public struct TPSlideControl : Swift::Equatable {
+    public enum VolumeAction : Swift::UInt8, Swift::Equatable {
+      case volumeUp
+      case volumeDown
+      public init?(rawValue: Swift::UInt8)
+      public typealias RawValue = Swift::UInt8
+      public var rawValue: Swift::UInt8 {
+        get
+      }
+    }
+    public let slideForward: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl.BluetoothKit::VolumeAction
+    public let slideBackward: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl.BluetoothKit::VolumeAction
+    public init(slideForward: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl.BluetoothKit::VolumeAction, slideBackward: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl.BluetoothKit::VolumeAction)
+    public static let `default`: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl
+    public static func parse(_ payload: Foundation::Data) -> BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl?
+    public func encode() -> Foundation::Data
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl, b: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl) -> Swift::Bool
+  }
+  public struct TPTapControl : Swift::Equatable {
+    public enum CallAction : Swift::UInt8, Swift::Equatable {
+      case answer
+      case reject
+      public init?(rawValue: Swift::UInt8)
+      public typealias RawValue = Swift::UInt8
+      public var rawValue: Swift::UInt8 {
+        get
+      }
+    }
+    public let singleTap: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl.BluetoothKit::CallAction
+    public let doubleTap: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl.BluetoothKit::CallAction
+    public init(singleTap: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl.BluetoothKit::CallAction, doubleTap: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl.BluetoothKit::CallAction)
+    public static let `default`: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl
+    public static func parse(_ payload: Foundation::Data) -> BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl?
+    public func encode() -> Foundation::Data
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl, b: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl) -> Swift::Bool
   }
   public enum KeyEventID : Swift::UInt8, Swift::CaseIterable {
     case buttonSingle
@@ -1900,74 +2127,123 @@ extension BluetoothKit::C110DeviceState {
     public static let mediaForwardVolumeDown: Swift::String
     public static let mediaControl: Swift::String
   }
+  public enum GlassesLanguage : Swift::UInt8, Swift::Codable, Swift::Equatable {
+    case zh_cn
+    case en
+    case ja
+    public static let `default`: BluetoothKit::C110DeviceState.BluetoothKit::GlassesLanguage
+    public var value: Swift::String {
+      get
+    }
+    public init?(value: Swift::String)
+    public init?(rawValue: Swift::UInt8)
+    public typealias RawValue = Swift::UInt8
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+  }
+  public enum ANCMode : Swift::UInt8, Swift::Codable {
+    case off
+    case on
+    case transparency
+    public init?(rawValue: Swift::UInt8)
+    public typealias RawValue = Swift::UInt8
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+  }
+  public struct Stablelization : Swift::Equatable, Swift::Codable {
+    public var isEnabled: Swift::Bool
+    public var isOn: Swift::Bool
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::Stablelization, b: BluetoothKit::C110DeviceState.BluetoothKit::Stablelization) -> Swift::Bool
+    public func encode(to encoder: any Swift::Encoder) throws
+    public init(from decoder: any Swift::Decoder) throws
+  }
+  public struct Wear : Swift::Equatable {
+    public var isOn: Swift::Bool
+    public var isWear: Swift::Bool
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::Wear, b: BluetoothKit::C110DeviceState.BluetoothKit::Wear) -> Swift::Bool
+  }
+  public struct FindDevice : Swift::Equatable {
+    public var isFindingLeft: Swift::Bool
+    public var isFindingRight: Swift::Bool
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::FindDevice, b: BluetoothKit::C110DeviceState.BluetoothKit::FindDevice) -> Swift::Bool
+  }
+  public struct WifiAP : Swift::Equatable {
+    public var ssid: Swift::String?
+    public var password: Swift::String?
+    public var ip: Swift::String?
+    public var port: Swift::String?
+    public var api: Swift::String?
+    public var mac: Swift::String?
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::WifiAP, b: BluetoothKit::C110DeviceState.BluetoothKit::WifiAP) -> Swift::Bool
+  }
+  public struct WifiP2P : Swift::Equatable {
+    public var name: Swift::String?
+    public var mac: Swift::String?
+    public static func == (a: BluetoothKit::C110DeviceState.BluetoothKit::WifiP2P, b: BluetoothKit::C110DeviceState.BluetoothKit::WifiP2P) -> Swift::Bool
+  }
+  public enum WifiState : Swift::UInt8, Swift::Equatable, Swift::Codable {
+    case lowPowerOff
+    case normal
+    public init?(rawValue: Swift::UInt8)
+    public typealias RawValue = Swift::UInt8
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+  }
 }
 public struct C110DeviceState : BluetoothKit::DeviceState, Swift::Equatable {
   public var activity: BluetoothKit::C110DeviceState.BluetoothKit::Activity
   public var firmware: BluetoothKit::C110DeviceState.BluetoothKit::FirmwareInfo?
-  public var otaFirmwareVersions: [BluetoothKit::C110OTAFirmwareInfo]?
   public var battery: BluetoothKit::C110DeviceState.BluetoothKit::BatteryInfo?
   public var diskInfo: BluetoothKit::C110DeviceState.BluetoothKit::DiskInfo?
-  public var ancOn: Swift::Bool?
-  public var isRecording: Swift::Bool?
+  public var features: BluetoothKit::C110DeviceState.BluetoothKit::SupportFeatures?
+  public var videoSettings: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings?
+  public var stabilization: BluetoothKit::C110DeviceState.BluetoothKit::Stablelization?
+  public var photoSettings: BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings?
+  public var ancMode: BluetoothKit::C110DeviceState.BluetoothKit::ANCMode
   public var unimportedCount: Swift::Int?
-  public var stabilizationOn: Swift::Bool?
-  public var wearDetectionEnabled: Swift::Bool?
-  public var videoDurationSeconds: Swift::UInt32?
-  public var orientation: BluetoothKit::C110Orientation?
-  public var isLandscape: Swift::Bool? {
-    get
-  }
+  public var wear: BluetoothKit::C110DeviceState.BluetoothKit::Wear?
+  public var findDevice: BluetoothKit::C110DeviceState.BluetoothKit::FindDevice
+  public var wifiState: BluetoothKit::C110DeviceState.BluetoothKit::WifiState?
+  public var wifiAP: BluetoothKit::C110DeviceState.BluetoothKit::WifiAP?
+  public var wifiP2PEnable: Swift::Bool?
+  public var wifiP2P: BluetoothKit::C110DeviceState.BluetoothKit::WifiP2P?
+  public var rtspURL: Swift::String?
+  public var ispLogSaveOn: Swift::Bool?
+  public var keyMappings: [BluetoothKit::C110KeyFuncMap]?
+  public var tpSlideControl: BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl?
+  public var tpTapControl: BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl?
+  public var glassesLanguage: BluetoothKit::C110DeviceState.BluetoothKit::GlassesLanguage?
   public var wifiConnected: Swift::Bool?
   public var wifiIP: Swift::String?
   public var wifiSSID: Swift::String?
-  public var ispStatus: BluetoothKit::C110ISPStatus?
-  public var ispRunningNormal: Swift::Bool? {
-    get
-  }
-  public var ispLogSaveOn: Swift::Bool?
-  public var apSSID: Swift::String?
-  public var apPassword: Swift::String?
-  public var apMAC: Swift::String?
-  public var p2pSupported: Swift::Bool?
-  public var p2pName: Swift::String?
-  public var p2pMAC: Swift::String?
-  public var rtspURL: Swift::String?
   public var isBleRecording: Swift::Bool?
   public var isLocalRecording: Swift::Bool?
   public var recordingHintEnabled: Swift::Bool?
   public var autoRecordingEnabled: Swift::Bool?
   public var localRecordingCount: Swift::Int?
+  public var isAIDialogueActive: Swift::Bool?
   public var aiVoiceDialogActive: Swift::Bool?
   public var voiceWakeKeywords: [BluetoothKit::C110VoiceWakeKeyword]
   public var voiceWakeMasterOn: Swift::Bool?
   public var voiceWakeMask: Swift::UInt32?
-  public var videoRecording: BluetoothKit::C110DeviceState.BluetoothKit::VideoRecording
-  public var videoSettings: BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings?
-  public var keyMappings: [BluetoothKit::C110KeyMapping]?
   public init()
   public static func == (a: BluetoothKit::C110DeviceState, b: BluetoothKit::C110DeviceState) -> Swift::Bool
 }
-public struct C110OTAFirmwareInfo : Swift::Equatable, Swift::Codable {
-  public let index: Swift::Int
-  public let protocolID: Swift::UInt8
-  public let version: Swift::String
-  public init(index: Swift::Int, protocolID: Swift::UInt8, version: Swift::String)
-  public static func == (a: BluetoothKit::C110OTAFirmwareInfo, b: BluetoothKit::C110OTAFirmwareInfo) -> Swift::Bool
-  public func encode(to encoder: any Swift::Encoder) throws
-  public init(from decoder: any Swift::Decoder) throws
-}
 public struct C110ManufacturerFilter : BluetoothKit::DeviceFilter {
-  public static let cameraCID: Swift::UInt16
   public let minRSSI: Swift::Int
   public init(minRSSI: Swift::Int = -90)
   public func matches(_ peripheral: BluetoothKit::BluetoothPeripheral) -> Swift::Bool
 }
 final public class C110Factory : BluetoothKit::DeviceFactory {
+  public static let namePrefixes: [Swift::String]
+  public init()
   final public let filter: any BluetoothKit::DeviceFilter
   final public var typeIdentifier: Swift::String {
     get
   }
-  public init()
   final public func makeDevice(_ peripheral: BluetoothKit::BluetoothPeripheral, manager: any BluetoothKit::BluetoothManagerProtocol) -> any BluetoothKit::BluetoothDevice
   @objc deinit
 }
@@ -1981,85 +2257,194 @@ public enum C110FrameType : Swift::UInt8 {
     get
   }
 }
-public struct C110FramePacket {
-  public let cmdID: Swift::UInt16
-  public let type: BluetoothKit::C110FrameType
-  public let seq: Swift::UInt8
-  public let payload: Foundation::Data
-}
-public enum C110Frame {
-  public static let prefix: Swift::UInt8
-  public static let dataHeaderSize: Swift::Int
-  public static func encode(cmdID: Swift::UInt16, type: BluetoothKit::C110FrameType, seq: Swift::UInt8, payload: Foundation::Data) -> Foundation::Data
-  public static func decode(_ raw: Foundation::Data) -> BluetoothKit::C110FramePacket?
-  public static func crc16(_ data: Foundation::Data) -> Swift::UInt16
-}
-public enum C110KeyID : Swift::Hashable {
-  case leftShort
-  case rightShort
-  case leftDouble
-  case rightDouble
-  case unknown(Swift::UInt8)
-  public init(rawValue: Swift::UInt8)
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-  public static let knownCases: [BluetoothKit::C110KeyID]
-  public static func == (a: BluetoothKit::C110KeyID, b: BluetoothKit::C110KeyID) -> Swift::Bool
-  public func hash(into hasher: inout Swift::Hasher)
-  public var hashValue: Swift::Int {
-    get
-  }
-}
-public enum C110KeyFunction : Swift::Hashable {
-  case none
-  case callback
-  case voiceAssistant
-  case prevTrack
-  case nextTrack
+public enum C110DeviceControlAction : Swift::UInt8 {
+  case playMusic
+  case pauseMusic
+  case previousMusic
+  case nextMusic
   case volumeUp
   case volumeDown
-  case playPause
-  case gameMode
-  case noiseReduction
-  case unknown(Swift::UInt8)
-  public init(rawValue: Swift::UInt8)
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-  public static let knownCases: [BluetoothKit::C110KeyFunction]
-  public static func == (a: BluetoothKit::C110KeyFunction, b: BluetoothKit::C110KeyFunction) -> Swift::Bool
-  public func hash(into hasher: inout Swift::Hasher)
-  public var hashValue: Swift::Int {
-    get
-  }
-}
-public struct C110KeyMapping : Swift::Equatable {
-  public let key: BluetoothKit::C110KeyID
-  public let function: BluetoothKit::C110KeyFunction
-  public init(key: BluetoothKit::C110KeyID, function: BluetoothKit::C110KeyFunction)
-  public static func parseList(_ payload: Foundation::Data) -> [BluetoothKit::C110KeyMapping]
-  public static func encodeList(_ mappings: [BluetoothKit::C110KeyMapping]) -> Foundation::Data
-  public static func == (a: BluetoothKit::C110KeyMapping, b: BluetoothKit::C110KeyMapping) -> Swift::Bool
-}
-public enum C110CommandGATT {
-  public static let service: CoreBluetooth::CBUUID
-  public static let read: CoreBluetooth::CBUUID
-  public static let write: CoreBluetooth::CBUUID
-}
-public enum C110OTAGATT {
-  public static let service: CoreBluetooth::CBUUID
-  public static let char: CoreBluetooth::CBUUID
-}
-public enum C110ANCMode : Swift::UInt8, Swift::Codable {
-  case normal
-  case anc
-  case transparency
+  case stopAIChat
+  case takePhoto
+  case startRecordVideo
+  case stopRecordVideo
+  case startRecordAudio
+  case stopRecordAudio
   public init?(rawValue: Swift::UInt8)
   public typealias RawValue = Swift::UInt8
   public var rawValue: Swift::UInt8 {
     get
   }
+}
+public struct C110KeyFuncMap : Swift::Equatable {
+  public enum KeyID : Swift::Hashable {
+    case leftShort
+    case rightShort
+    case leftDouble
+    case rightDouble
+    case unknown(Swift::UInt8)
+    public init(rawValue: Swift::UInt8)
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+    public static let knownCases: [BluetoothKit::C110KeyFuncMap.BluetoothKit::KeyID]
+    public static func == (a: BluetoothKit::C110KeyFuncMap.BluetoothKit::KeyID, b: BluetoothKit::C110KeyFuncMap.BluetoothKit::KeyID) -> Swift::Bool
+    public func hash(into hasher: inout Swift::Hasher)
+    public var hashValue: Swift::Int {
+      get
+    }
+  }
+  public enum FunctionID : Swift::Hashable {
+    case none
+    case callback
+    case voiceAssistant
+    case prevTrack
+    case nextTrack
+    case volumeUp
+    case volumeDown
+    case playPause
+    case gameMode
+    case noiseReduction
+    case unknown(Swift::UInt8)
+    public init(rawValue: Swift::UInt8)
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+    public static let knownCases: [BluetoothKit::C110KeyFuncMap.BluetoothKit::FunctionID]
+    public static func == (a: BluetoothKit::C110KeyFuncMap.BluetoothKit::FunctionID, b: BluetoothKit::C110KeyFuncMap.BluetoothKit::FunctionID) -> Swift::Bool
+    public func hash(into hasher: inout Swift::Hasher)
+    public var hashValue: Swift::Int {
+      get
+    }
+  }
+  public let key: BluetoothKit::C110KeyFuncMap.BluetoothKit::KeyID
+  public let function: BluetoothKit::C110KeyFuncMap.BluetoothKit::FunctionID
+  public init(key: BluetoothKit::C110KeyFuncMap.BluetoothKit::KeyID, function: BluetoothKit::C110KeyFuncMap.BluetoothKit::FunctionID)
+  public static func parse(_ payload: Foundation::Data) -> [BluetoothKit::C110KeyFuncMap]
+  public static func encode(_ mappings: [BluetoothKit::C110KeyFuncMap]) -> Foundation::Data
+  public static func == (a: BluetoothKit::C110KeyFuncMap, b: BluetoothKit::C110KeyFuncMap) -> Swift::Bool
+}
+public struct C110KeyActionMap {
+  public enum KeyID : Swift::UInt8, Swift::Codable {
+    case left
+    case right
+    case touch
+    case combine
+    public init?(rawValue: Swift::UInt8)
+    public typealias RawValue = Swift::UInt8
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+  }
+  public enum ActionID : Swift::UInt8, Swift::Codable {
+    case press2s
+    case press3s
+    case press7s
+    case resetFactory
+    case singleTap
+    case doubleTap
+    case tripleTap
+    case slideForward
+    case slideBackward
+    case shortTouch1s
+    public init?(rawValue: Swift::UInt8)
+    public typealias RawValue = Swift::UInt8
+    public var rawValue: Swift::UInt8 {
+      get
+    }
+  }
+  public let key: BluetoothKit::C110KeyActionMap.BluetoothKit::KeyID
+  public let action: BluetoothKit::C110KeyActionMap.BluetoothKit::ActionID
+  public init?(rawKey: Swift::UInt8, rawAction: Swift::UInt8)
+  public var isFactoryResetCombo: Swift::Bool {
+    get
+  }
+  public var isSingleTapLeft: Swift::Bool {
+    get
+  }
+  public var isDoubleTapLeft: Swift::Bool {
+    get
+  }
+}
+final public class C110LogDownloader {
+  public struct Config {
+    public var logURLString: Swift::String
+    public var ispTimeout: Swift::Double
+    public var requestTimeout: Swift::Double
+    public var maxHttpRetries: Swift::Int
+    public var httpRetryDelay: Swift::Double
+    public init()
+  }
+  public enum FailureReason : Swift::Equatable {
+    case deviceBusy
+    case wifiFailed(Swift::String)
+    case ispFailed(Swift::String)
+    case httpFailed(Swift::String)
+    case emptyBody
+    case cancelled
+    public static func == (a: BluetoothKit::C110LogDownloader.BluetoothKit::FailureReason, b: BluetoothKit::C110LogDownloader.BluetoothKit::FailureReason) -> Swift::Bool
+  }
+  public enum DownloadResult {
+    case success(Foundation::URL)
+    case failure(BluetoothKit::C110LogDownloader.BluetoothKit::FailureReason)
+  }
+  public enum Phase : Swift::Equatable {
+    case idle
+    case prepareAP
+    case prepareISP
+    case downloading
+    public static func == (a: BluetoothKit::C110LogDownloader.BluetoothKit::Phase, b: BluetoothKit::C110LogDownloader.BluetoothKit::Phase) -> Swift::Bool
+    public func hash(into hasher: inout Swift::Hasher)
+    public var hashValue: Swift::Int {
+      get
+    }
+  }
+  final public var config: BluetoothKit::C110LogDownloader.BluetoothKit::Config
+  final public var phase: BluetoothKit::C110LogDownloader.BluetoothKit::Phase {
+    get
+  }
+  final public var isGlassesLogDownloadActive: Swift::Bool {
+    get
+  }
+  @objc deinit
+  public init(device: BluetoothKit::C110Device)
+  final public func stop()
+  final public func beginDownload(completion: @escaping (BluetoothKit::C110LogDownloader.BluetoothKit::DownloadResult) -> Swift::Void)
+}
+final public class C110OTAEngine {
+  public enum State : Swift::Equatable {
+    case idle
+    case startingOTA
+    case openingHotspot
+    case joiningWifi
+    case wifiInstalling(progress: Swift::Float)
+    case bleInstalling(progress: Swift::Float)
+    case completed(version: Swift::String?)
+    case failed(reason: Swift::String, mutexRejected: Swift::Bool)
+    case cancelled
+    public var fraction: Swift::Float {
+      get
+    }
+    public static func == (a: BluetoothKit::C110OTAEngine.BluetoothKit::State, b: BluetoothKit::C110OTAEngine.BluetoothKit::State) -> Swift::Bool
+  }
+  public struct UpgradeRequest : Swift::Equatable {
+    public let wifiFirmwareURL: Foundation::URL
+    public let bleFirmwareURL: Foundation::URL
+    public init(wifiFirmwareURL: Foundation::URL, bleFirmwareURL: Foundation::URL)
+    public static func == (a: BluetoothKit::C110OTAEngine.BluetoothKit::UpgradeRequest, b: BluetoothKit::C110OTAEngine.BluetoothKit::UpgradeRequest) -> Swift::Bool
+  }
+  final public var stateStream: RxSwift::Observable<BluetoothKit::C110OTAEngine.BluetoothKit::State> {
+    get
+  }
+  final public var currentState: BluetoothKit::C110OTAEngine.BluetoothKit::State {
+    get
+  }
+  final public var onLog: ((_ message: Swift::String) -> Swift::Void)?
+  final public var wifiSession: BluetoothKit::C110WifiSession?
+  public init(device: BluetoothKit::C110Device)
+  @objc deinit
+  final public func cancel()
+  final public func start(_ request: BluetoothKit::C110OTAEngine.BluetoothKit::UpgradeRequest)
 }
 public struct C110VoiceWakeKeyword : Swift::Equatable, Swift::Codable {
   public let index: Swift::UInt8
@@ -2070,75 +2455,79 @@ public struct C110VoiceWakeKeyword : Swift::Equatable, Swift::Codable {
   public func encode(to encoder: any Swift::Encoder) throws
   public init(from decoder: any Swift::Decoder) throws
 }
-public enum C110PhysicalKey : Swift::UInt8, Swift::Codable {
-  case left
-  case right
-  case touch
-  case combo
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
+public enum FileTransferInfo {
+  case httpURL(_: Swift::String)
+  case bleFileTransfer(_: Swift::UInt8)
 }
-public enum C110PhysicalKeyAction : Swift::UInt8, Swift::Codable {
-  case longPress2s
-  case longPress3s
-  case longPress7s
-  case click
-  case doubleClick
-  case tripleClick
-  case shortTouch1s
-  case resetFactory
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
+public struct FileUploadInfo : Swift::Equatable {
+  public let totalLength: Swift::Int
+  public let packetSize: Swift::Int
+  public let totalPackets: Swift::Int
+  public static func == (a: BluetoothKit::FileUploadInfo, b: BluetoothKit::FileUploadInfo) -> Swift::Bool
 }
-public struct C110PhysicalKeyEvent : Swift::Equatable {
-  public let key: BluetoothKit::C110PhysicalKey?
-  public let action: BluetoothKit::C110PhysicalKeyAction?
-  public let rawKey: Swift::UInt8
-  public let rawAction: Swift::UInt8
-  public init(rawKey: Swift::UInt8, rawAction: Swift::UInt8)
-  public static func == (a: BluetoothKit::C110PhysicalKeyEvent, b: BluetoothKit::C110PhysicalKeyEvent) -> Swift::Bool
+public struct FileDataPacket {
+  public let totalPackets: Swift::Int
+  public let packetIndex: Swift::Int
+  public let data: Foundation::Data
 }
-public enum C110Orientation : Swift::UInt8, Swift::Codable {
-  case landscape
-  case portrait
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-}
-public enum C110ISPStatus : Swift::UInt8, Swift::Codable {
-  case lowPowerOff
-  case normal
-  public init?(rawValue: Swift::UInt8)
-  public typealias RawValue = Swift::UInt8
-  public var rawValue: Swift::UInt8 {
-    get
-  }
-}
+public let C110IPAddress: Swift::String
+public let C110HttpBaseURL: Swift::String
+public let C110RtspBaseURL: Swift::String
 final public class C110WifiSession {
-  final public var onConnected: ((Swift::String) -> Swift::Void)?
-  final public var onFailed: ((Swift::String, Swift::String, Swift::String) -> Swift::Void)?
-  final public var onCredentialsReady: ((Swift::String, Swift::String) -> Swift::Void)?
-  public static let gatewayHost: Swift::String
-  final public var credentialTimeout: Swift::Double
+  public enum SoftAPOwner : Swift::String, Swift::Equatable {
+    case sync
+    case ota
+    case log
+    public init?(rawValue: Swift::String)
+    public typealias RawValue = Swift::String
+    public var rawValue: Swift::String {
+      get
+    }
+  }
+  final public let owner: BluetoothKit::C110WifiSession.BluetoothKit::SoftAPOwner
+  public enum State : Swift::Equatable {
+    case idle
+    case requesting
+    case joining(BluetoothKit::C110DeviceState.BluetoothKit::WifiAP)
+    case joined(BluetoothKit::C110DeviceState.BluetoothKit::WifiAP)
+    case finishing(BluetoothKit::C110DeviceState.BluetoothKit::WifiAP)
+    case finished
+    case failed(BluetoothKit::C110WifiSession.BluetoothKit::SessionError)
+    public static func == (a: BluetoothKit::C110WifiSession.BluetoothKit::State, b: BluetoothKit::C110WifiSession.BluetoothKit::State) -> Swift::Bool
+  }
+  public enum SessionError : Swift::Equatable {
+    case openTimeout
+    case joinFailed(reason: Swift::String)
+    case finishTimeout
+    case cancelled
+    public var message: Swift::String {
+      get
+    }
+    public static func == (a: BluetoothKit::C110WifiSession.BluetoothKit::SessionError, b: BluetoothKit::C110WifiSession.BluetoothKit::SessionError) -> Swift::Bool
+  }
+  final public var joinDelay: Swift::Double
+  final public var joinRetryInterval: Swift::Double
+  final public var maxJoinAttempts: Swift::Int
+  final public var openTimeout: Swift::Double
+  final public var joinTimeout: Swift::Double
+  final public var finishTimeout: Swift::Double
   final public var probeInterval: Swift::Double
   final public var maxProbeAttempts: Swift::Int
-  final public var overallTimeout: Swift::Double
-  final public var connectedSSID: Swift::String? {
+  final public var stateStream: RxSwift::Observable<BluetoothKit::C110WifiSession.BluetoothKit::State> {
     get
   }
-  public init(device: BluetoothKit::C110Device)
+  final public var currentStateValue: BluetoothKit::C110WifiSession.BluetoothKit::State {
+    get
+  }
   @objc deinit
-  final public func open()
-  final public func close()
+  public init?(device: BluetoothKit::C110Device, owner: BluetoothKit::C110WifiSession.BluetoothKit::SoftAPOwner)
   final public func cancel()
+  final public func open()
+  final public func finish()
+}
+extension BluetoothKit::C110WifiSession {
+  public static func savedHotspotSSID(deviceID: Foundation::UUID) -> Swift::String?
+  public static func forgetSavedHotspot(deviceID: Foundation::UUID)
 }
 public enum ConnectionState : Swift::Equatable {
   case poweredOff
@@ -3058,6 +3447,8 @@ extension BluetoothKit::C100DeviceState.BluetoothKit::KeyEventID : Swift::RawRep
 extension BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID : Swift::Equatable {}
 extension BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID : Swift::Hashable {}
 extension BluetoothKit::C100DeviceState.BluetoothKit::KeyActionID : Swift::RawRepresentable {}
+extension BluetoothKit::C100DeviceState.BluetoothKit::GlassesLanguage : Swift::Hashable {}
+extension BluetoothKit::C100DeviceState.BluetoothKit::GlassesLanguage : Swift::RawRepresentable {}
 extension BluetoothKit::C100DeviceState.BluetoothKit::Activity : Swift::Hashable {}
 extension BluetoothKit::C100DeviceState.BluetoothKit::Activity : Swift::RawRepresentable {}
 extension BluetoothKit::C100DeviceEvent.BluetoothKit::AIChatTriggerMode : Swift::Equatable {}
@@ -3085,20 +3476,20 @@ extension BluetoothKit::C100Frame.BluetoothKit::Direction : Swift::Hashable {}
 extension BluetoothKit::C100PendingMediaItem.BluetoothKit::Kind : Swift::Equatable {}
 extension BluetoothKit::C100PendingMediaItem.BluetoothKit::Kind : Swift::Hashable {}
 extension BluetoothKit::C100PendingMediaItem.BluetoothKit::Kind : Swift::RawRepresentable {}
-extension BluetoothKit::C110Cmd : Swift::Equatable {}
-extension BluetoothKit::C110Cmd : Swift::Hashable {}
-extension BluetoothKit::C110Cmd : Swift::RawRepresentable {}
-extension BluetoothKit::C110ControlAction : Swift::Equatable {}
-extension BluetoothKit::C110ControlAction : Swift::Hashable {}
-extension BluetoothKit::C110ControlAction : Swift::RawRepresentable {}
-extension BluetoothKit::C110AudioMode : Swift::Equatable {}
-extension BluetoothKit::C110AudioMode : Swift::Hashable {}
-extension BluetoothKit::C110AudioMode : Swift::RawRepresentable {}
 extension BluetoothKit::C110CaptureResolution : Swift::Equatable {}
 extension BluetoothKit::C110CaptureResolution : Swift::Hashable {}
 extension BluetoothKit::C110CaptureResolution : Swift::RawRepresentable {}
+extension BluetoothKit::C110CallStatus : Swift::Equatable {}
+extension BluetoothKit::C110CallStatus : Swift::Hashable {}
+extension BluetoothKit::C110CallStatus : Swift::RawRepresentable {}
+extension BluetoothKit::C110AudioMode : Swift::Equatable {}
+extension BluetoothKit::C110AudioMode : Swift::Hashable {}
+extension BluetoothKit::C110AudioMode : Swift::RawRepresentable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::Activity : Swift::Hashable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::Activity : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo.BluetoothKit::OTAProtocol : Swift::Equatable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo.BluetoothKit::OTAProtocol : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::OTAFirmwareInfo.BluetoothKit::OTAProtocol : Swift::RawRepresentable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration : Swift::Equatable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration : Swift::Hashable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Duration : Swift::RawRepresentable {}
@@ -3108,33 +3499,41 @@ extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit
 extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Encoder : Swift::Equatable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Encoder : Swift::Hashable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::Encoder : Swift::RawRepresentable {}
-extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution : Swift::Equatable {}
-extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution : Swift::Hashable {}
-extension BluetoothKit::C110DeviceState.BluetoothKit::VideoSettings.BluetoothKit::PhotoResolution : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution : Swift::Equatable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::PhotoSettings.BluetoothKit::Resolution : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl.BluetoothKit::VolumeAction : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::TPSlideControl.BluetoothKit::VolumeAction : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl.BluetoothKit::CallAction : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::TPTapControl.BluetoothKit::CallAction : Swift::RawRepresentable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::KeyEventID : Swift::Equatable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::KeyEventID : Swift::Hashable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::KeyEventID : Swift::RawRepresentable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::KeyActionID : Swift::Equatable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::KeyActionID : Swift::Hashable {}
 extension BluetoothKit::C110DeviceState.BluetoothKit::KeyActionID : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::GlassesLanguage : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::GlassesLanguage : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::ANCMode : Swift::Equatable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::ANCMode : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::ANCMode : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::WifiState : Swift::Hashable {}
+extension BluetoothKit::C110DeviceState.BluetoothKit::WifiState : Swift::RawRepresentable {}
 extension BluetoothKit::C110FrameType : Swift::Equatable {}
 extension BluetoothKit::C110FrameType : Swift::Hashable {}
 extension BluetoothKit::C110FrameType : Swift::RawRepresentable {}
-extension BluetoothKit::C110ANCMode : Swift::Equatable {}
-extension BluetoothKit::C110ANCMode : Swift::Hashable {}
-extension BluetoothKit::C110ANCMode : Swift::RawRepresentable {}
-extension BluetoothKit::C110PhysicalKey : Swift::Equatable {}
-extension BluetoothKit::C110PhysicalKey : Swift::Hashable {}
-extension BluetoothKit::C110PhysicalKey : Swift::RawRepresentable {}
-extension BluetoothKit::C110PhysicalKeyAction : Swift::Equatable {}
-extension BluetoothKit::C110PhysicalKeyAction : Swift::Hashable {}
-extension BluetoothKit::C110PhysicalKeyAction : Swift::RawRepresentable {}
-extension BluetoothKit::C110Orientation : Swift::Equatable {}
-extension BluetoothKit::C110Orientation : Swift::Hashable {}
-extension BluetoothKit::C110Orientation : Swift::RawRepresentable {}
-extension BluetoothKit::C110ISPStatus : Swift::Equatable {}
-extension BluetoothKit::C110ISPStatus : Swift::Hashable {}
-extension BluetoothKit::C110ISPStatus : Swift::RawRepresentable {}
+extension BluetoothKit::C110DeviceControlAction : Swift::Equatable {}
+extension BluetoothKit::C110DeviceControlAction : Swift::Hashable {}
+extension BluetoothKit::C110DeviceControlAction : Swift::RawRepresentable {}
+extension BluetoothKit::C110KeyActionMap.BluetoothKit::KeyID : Swift::Equatable {}
+extension BluetoothKit::C110KeyActionMap.BluetoothKit::KeyID : Swift::Hashable {}
+extension BluetoothKit::C110KeyActionMap.BluetoothKit::KeyID : Swift::RawRepresentable {}
+extension BluetoothKit::C110KeyActionMap.BluetoothKit::ActionID : Swift::Equatable {}
+extension BluetoothKit::C110KeyActionMap.BluetoothKit::ActionID : Swift::Hashable {}
+extension BluetoothKit::C110KeyActionMap.BluetoothKit::ActionID : Swift::RawRepresentable {}
+extension BluetoothKit::C110LogDownloader.BluetoothKit::Phase : Swift::Hashable {}
+extension BluetoothKit::C110WifiSession.BluetoothKit::SoftAPOwner : Swift::Hashable {}
+extension BluetoothKit::C110WifiSession.BluetoothKit::SoftAPOwner : Swift::RawRepresentable {}
 extension BluetoothKit::EASessionMode : Swift::Equatable {}
 extension BluetoothKit::EASessionMode : Swift::Hashable {}
 extension BluetoothKit::EASessionMode : Swift::RawRepresentable {}

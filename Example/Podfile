@@ -5,7 +5,7 @@ target 'BluetoothKitExample' do
   # Dev against source tree:
   # pod 'BluetoothKit', :path => '../'
   # Binary (GitHub):
-  pod 'BluetoothKit', :git => 'https://github.com/INMO-X/BluetoothKit.git', :tag => '0.1.0'
+  pod 'BluetoothKit', :git => 'https://github.com/INMO-X/BluetoothKit.git', :tag => '0.1.2'
 end
 
 post_install do |installer|
