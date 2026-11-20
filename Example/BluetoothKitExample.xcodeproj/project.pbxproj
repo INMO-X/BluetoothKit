@@ -106,6 +106,7 @@
 				EFE9591E8EF7E159122D24AF /* Resources */,
 				2E1ED99D1E4D118125DCB51D /* Frameworks */,
 				55010C347ABF6D8A7843D57B /* [CP] Copy Pods Resources */,
+				204BDB6BD4D25399DDE32D2E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -162,6 +163,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		204BDB6BD4D25399DDE32D2E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BluetoothKitExample/Pods-BluetoothKitExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BluetoothKitExample/Pods-BluetoothKitExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BluetoothKitExample/Pods-BluetoothKitExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		55010C347ABF6D8A7843D57B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
